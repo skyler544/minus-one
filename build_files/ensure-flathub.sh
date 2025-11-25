@@ -15,7 +15,7 @@ curl --retry 3 -Lo \
 rm -f /usr/lib/systemd/system/flatpak-add-flathub-repos.service || true
 cat > /usr/lib/systemd/system/flatpak-add-flathub-repos.service <<'EOF'
 [Unit]
-Description=Add Flathub flatpak repositories.
+Description=Add Flathub flatpak repositories and replace all Fedora flatpaks.
 ConditionPathExists=!/var/lib/flatpak/.minus-one-flatpak-initialized
 Before=flatpak-system-helper.service
 
@@ -25,6 +25,7 @@ RemainAfterExit=yes
 ExecStart=/usr/bin/flatpak remote-delete --system --force fedora
 ExecStart=/usr/bin/flatpak remote-delete --system --force fedora-testing
 ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo && /usr/bin/flatpak remote-modify --system flathub --enable
+ExecStart=/usr/bin/flatpak install --reinstall --assumeyes flathub $(/usr/bin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)
 ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 
 [Install]
