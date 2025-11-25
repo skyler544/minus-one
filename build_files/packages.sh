@@ -9,6 +9,7 @@ EXCLUDED_PACKAGES=(
     default-fonts-core-emoji
     fedora-flathub-remote
     fedora-third-party
+    firefox
     gnome-software
     gnome-software-rpm-ostree
     gnome-tour
@@ -20,6 +21,7 @@ INCLUDED_PACKAGES=(
     adw-gtk3-theme
     distrobox
     emacs
+    google-noto-emoji-fonts
     wl-clipboard
 )
 
@@ -33,6 +35,6 @@ $DNF install "${INCLUDED_PACKAGES[@]}"
 # CLEANUP
 # ----------------------------------------------------
 $DNF autoremove && $DNF clean all
-rm -f /var/log/dnf*.log
-rm -rf /var/lib/dnf
-rm -rf /var/lib/alternatives
+rm -f /var/log/dnf*.log || true
+rm -rf /var/lib/dnf || true
+rm -rf /var/lib/alternatives || true

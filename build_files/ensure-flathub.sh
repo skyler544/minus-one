@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ouex pipefail
 
-# ENABLE FLATHUB
+# FLATHUB REPO
 # ----------------------------------------------------
 mkdir -p /etc/flatpak/remotes.d
 curl --retry 3 -Lo \
@@ -12,7 +12,6 @@ curl --retry 3 -Lo \
 # OVERWRITE SERVICE
 # ----------------------------------------------------
 rm -f /usr/lib/systemd/system/flatpak-add-flathub-repos.service || true
-
 cat > /usr/lib/systemd/system/flatpak-add-flathub-repos.service <<'EOF'
 [Unit]
 Description=Add Flathub flatpak repositories.

@@ -1,12 +1,10 @@
 FROM quay.io/fedora-ostree-desktops/silverblue:42
 
-COPY packages.sh /tmp/packages.sh
-COPY ensure-flathub.sh /tmp/ensure-flathub.sh
+COPY /build_files /tmp/
 COPY mg /usr/bin/mg
 
-RUN /tmp/packages.sh
-RUN /tmp/ensure-flathub.sh
-RUN ostree container commit
-
+RUN /tmp/build_files/packages.sh
+RUN /tmp/build_files/ensure-flathub.sh
+RUN /tmp/build_files/post-install.sh
 
 RUN bootc container lint
