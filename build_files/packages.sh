@@ -22,8 +22,6 @@ INCLUDED_PACKAGES=(
     distrobox
     emacs
     gnome-tweaks
-    google-noto-emoji-fonts
-    wl-clipboard
 )
 
 
