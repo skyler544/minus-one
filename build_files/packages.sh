@@ -21,6 +21,7 @@ INCLUDED_PACKAGES=(
     adw-gtk3-theme
     distrobox
     emacs
+    gnome-tweaks
     google-noto-emoji-fonts
     wl-clipboard
 )
