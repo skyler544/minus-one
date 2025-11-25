@@ -1,16 +1,16 @@
-FROM ghcr.io/ublue-os/bluefin-dx:gts
+FROM quay.io/fedora-ostree-desktops/silverblue:42
 
 ### MODIFICATIONS
 ## Customizations to the base image
 COPY packages.sh /tmp/packages.sh
-COPY regen-initramfs.sh /usr/local/sbin/regen-initramfs.sh
+# COPY regen-initramfs.sh /usr/local/sbin/regen-initramfs.sh
 COPY mg /usr/bin/mg
 
 RUN /tmp/packages.sh && \
     ostree container commit
 
 ### INITRAMFS
-RUN /usr/local/sbin/regen-initramfs.sh
+# RUN /usr/local/sbin/regen-initramfs.sh
 
 ### LINTING
 ## Verify final image and contents are correct.
