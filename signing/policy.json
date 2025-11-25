@@ -6,33 +6,10 @@
   ],
   "transports": {
     "docker": {
-      "registry.access.redhat.com": [
-        {
-          "type": "signedBy",
-          "keyType": "GPGKeys",
-          "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
-        }
-      ],
-      "registry.redhat.io": [
-        {
-          "type": "signedBy",
-          "keyType": "GPGKeys",
-          "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
-        }
-      ],
-      "quay.io/toolbx-images": [
+      "ghcr.io/skyler544": [
         {
           "type": "sigstoreSigned",
-          "keyPath": "/etc/pki/containers/quay.io-toolbx-images.pub",
-          "signedIdentity": {
-            "type": "matchRepository"
-          }
-        }
-      ],
-      "ghcr.io/skyler544/minus-one": [
-        {
-          "type": "sigstoreSigned",
-          "keyPaths": ["/etc/pki/containers/cosign.pub"],
+          "keyPath": "/etc/pki/containers/cosign.pub",
           "signedIdentity": {
             "type": "matchRepository"
           }
@@ -45,55 +22,6 @@
       ]
     },
     "docker-daemon": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "atomic": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "containers-storage": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "dir": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "oci": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "oci-archive": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "docker-archive": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "tarball": {
       "": [
         {
           "type": "insecureAcceptAnything"
