@@ -35,6 +35,3 @@ $DNF install "${INCLUDED_PACKAGES[@]}"
 # CLEANUP
 # ----------------------------------------------------
 $DNF autoremove && $DNF clean all
-rm -f /var/log/dnf*.log || true
-rm -rf /var/lib/dnf || true
-rm -rf /var/lib/alternatives || true
