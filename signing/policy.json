@@ -29,7 +29,7 @@
           }
         }
       ],
-      "ghcr.io/skyler544/minus-one": [
+      "ghcr.io/skyler544": [
         {
           "type": "sigstoreSigned",
           "keyPaths": ["/etc/pki/containers/cosign.pub"],

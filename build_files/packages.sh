@@ -19,7 +19,6 @@ EXCLUDED_PACKAGES=(
 
 INCLUDED_PACKAGES=(
     adw-gtk3-theme
-    cosign
     distrobox
     emacs
     gnome-tweaks
