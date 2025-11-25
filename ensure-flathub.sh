@@ -11,8 +11,7 @@ curl --retry 3 -Lo \
 
 # OVERWRITE SERVICE
 # ----------------------------------------------------
-mv -f /usr/lib/systemd/system/flatpak-add-flathub-repos.service \
-   /usr/lib/systemd/system/flatpak-add-fedora-repos.service || true
+rm -f /usr/lib/systemd/system/flatpak-add-flathub-repos.service || true
 
 cat > /usr/lib/systemd/system/flatpak-add-flathub-repos.service <<'EOF'
 [Unit]
@@ -23,9 +22,8 @@ Before=flatpak-system-helper.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+ExecStart=/usr/bin/flatpak remote-delete --system --force fedora
 ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
-ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists --disable --title "Fedora Flatpaks" fedora oci+https://registry.fedoraproject.org
-ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists --disable --title "Fedora Flatpaks (testing)" fedora oci+https://registry.fedoraproject.org#testing
 ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 
 [Install]
