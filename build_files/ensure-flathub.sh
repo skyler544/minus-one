@@ -24,8 +24,9 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/flatpak remote-delete --force fedora
 ExecStart=/usr/bin/flatpak remote-delete --force fedora-testing
-ExecStart=/usr/bin/flatpak remote-add --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo && /usr/bin/flatpak remote-modify --enable flathub
-ExecStart=/usr/bin/flatpak install --reinstall --assumeyes flathub $(/usr/bin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)
+ExecStart=/usr/bin/flatpak remote-add --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+ExecStart=/usr/bin/flatpak remote-modify --enable flathub
+ExecStart=-/bin/bash -c '/usr/bin/flatpak install --reinstall --assumeyes flathub $(/usr/bin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)'
 ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 
 [Install]
