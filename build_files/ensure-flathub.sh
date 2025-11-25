@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ouex pipefail
 
+
 # FLATHUB REPO
 # ----------------------------------------------------
 mkdir -p /etc/flatpak/remotes.d

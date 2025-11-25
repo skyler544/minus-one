@@ -2,6 +2,7 @@
 set -ouex pipefail
 DNF="dnf --quiet --assumeyes"
 
+
 # PACKAGE LISTS
 # ----------------------------------------------------
 EXCLUDED_PACKAGES=(

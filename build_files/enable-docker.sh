@@ -2,6 +2,7 @@
 set -ouex pipefail
 DNF="dnf --quiet --assumeyes"
 
+
 # INSTALL DOCKER
 # ----------------------------------------------------
 $DNF config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
@@ -14,7 +15,6 @@ $DNF install --enablerepo=docker-ce-stable \
     docker-model-plugin
 
 
-# ADD GROUP AND START SERVICE
+# START SERVICE
 # ----------------------------------------------------
-groupadd docker
 systemctl enable docker
