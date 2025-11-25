@@ -1,10 +1,9 @@
 #!/bin/bash
 set -ouex pipefail
-
-# PREPARATION
-# ----------------------------------------------------
 DNF="dnf --quiet --assumeyes"
 
+# PACKAGE LISTS
+# ----------------------------------------------------
 EXCLUDED_PACKAGES=(
     default-fonts-core-emoji
     fedora-flathub-remote
@@ -26,7 +25,7 @@ INCLUDED_PACKAGES=(
 )
 
 
-# PACKAGES
+# INSTALL PACKAGES
 # ----------------------------------------------------
 $DNF remove "${EXCLUDED_PACKAGES[@]}"
 $DNF install "${INCLUDED_PACKAGES[@]}"

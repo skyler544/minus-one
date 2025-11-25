@@ -29,3 +29,8 @@ ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 [Install]
 WantedBy=multi-user.target
 EOF
+
+
+# START SERVICE
+# ----------------------------------------------------
+systemctl enable flatpak-add-flathub-repos.service
