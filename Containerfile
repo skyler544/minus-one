@@ -2,6 +2,8 @@
 # ----------------------------------------------------
 FROM quay.io/fedora-ostree-desktops/silverblue:42
 COPY /build_files /tmp/build_files
+COPY policy.json /etc/containers/policy.json
+COPY cosign.pub /etc/pki/containers/cosign.pub
 COPY mg /usr/bin/mg
 
 
