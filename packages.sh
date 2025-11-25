@@ -8,13 +8,18 @@ DNF="dnf --quiet --assumeyes"
 
 EXCLUDED_PACKAGES=(
     default-fonts-core-emoji
+    fedora-flathub-remote
+    gnome-software-rpm-ostree
     gnome-tour
     google-noto-color-emoji-fonts
     malcontent-control
 )
 
 INCLUDED_PACKAGES=(
+    adw-gtk3-theme
+    distrobox
     emacs
+    wl-clipboard
 )
 
 
