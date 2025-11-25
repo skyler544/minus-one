@@ -1,14 +1,15 @@
 #!/bin/bash
+set -ouex pipefail
 
 # PREPARATION
 # ----------------------------------------------------
-set -ouex pipefail
-
 DNF="dnf --quiet --assumeyes"
 
 EXCLUDED_PACKAGES=(
     default-fonts-core-emoji
     fedora-flathub-remote
+    fedora-third-party
+    gnome-software
     gnome-software-rpm-ostree
     gnome-tour
     google-noto-color-emoji-fonts

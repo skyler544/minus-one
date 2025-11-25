@@ -1,17 +1,12 @@
 FROM quay.io/fedora-ostree-desktops/silverblue:42
 
-### MODIFICATIONS
-## Customizations to the base image
 COPY packages.sh /tmp/packages.sh
-# COPY regen-initramfs.sh /usr/local/sbin/regen-initramfs.sh
+COPY ensure-flathub.sh /usr/local/sbin/ensure-flathub.sh
 COPY mg /usr/bin/mg
 
-RUN /tmp/packages.sh && \
-    ostree container commit
+RUN /tmp/packages.sh
+RUN /usr/local/sbin/ensure-flathub.sh
+RUN ostree container commit
 
-### INITRAMFS
-# RUN /usr/local/sbin/regen-initramfs.sh
 
-### LINTING
-## Verify final image and contents are correct.
 RUN bootc container lint
