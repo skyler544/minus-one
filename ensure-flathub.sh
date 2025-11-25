@@ -23,7 +23,7 @@ Before=flatpak-system-helper.service
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/flatpak remote-delete --system --force fedora
-ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo && /usr/bin/flatpak remote-modify --system flathub --enable
 ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 
 [Install]
