@@ -9,7 +9,7 @@
       "ghcr.io/skyler544": [
         {
           "type": "sigstoreSigned",
-          "keyPath": "/etc/pki/containers/cosign.pub",
+          "keyPath": "/etc/pki/containers/skyler544.pub",
           "signedIdentity": {
             "type": "matchRepository"
           }
