@@ -1,6 +1,6 @@
 FROM quay.io/fedora-ostree-desktops/silverblue:42
 
-COPY /build_files /tmp/
+COPY /build_files /tmp/build_files
 COPY mg /usr/bin/mg
 
 RUN /tmp/build_files/packages.sh
