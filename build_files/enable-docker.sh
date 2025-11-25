@@ -15,6 +15,15 @@ $DNF install --enablerepo=docker-ce-stable \
     docker-model-plugin
 
 
+# FIX GROUP
+# ----------------------------------------------------
+cat > /usr/lib/sysusers.d/50-docker.conf <<'EOF'
+# Ensure docker group exists for docker.socket
+g docker - - - -
+EOF
+systemd-sysusers
+
+
 # START SERVICE
 # ----------------------------------------------------
 systemctl enable docker
