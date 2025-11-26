@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 
 emacs -nw -Q \
       --eval '(menu-bar-mode -1)' \

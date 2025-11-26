@@ -49,16 +49,17 @@ ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpaks-replaced
 EOF
 cat > /usr/lib/systemd/system/replace-installed-fedora-flatpaks.timer <<'EOF'
 [Unit]
-Description=Run replace-fedora-flatpaks shortly after boot
+Description=Run replace-fedora-flatpaks after connecting to the network after first boot.
 
 [Timer]
-OnBootSec=2min
+OnBootSec=1min
 Unit=replace-installed-fedora-flatpaks.service
 Persistent=yes
 
 [Install]
 WantedBy=timers.target
 EOF
+
 
 # ENABLE SERVICES
 # ----------------------------------------------------
