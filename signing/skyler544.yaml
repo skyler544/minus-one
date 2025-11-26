@@ -1,3 +1,0 @@
-docker:
-  ghcr.io/skyler544:
-    use-sigstore-attachments: true
