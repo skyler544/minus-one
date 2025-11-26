@@ -4,7 +4,7 @@ set -ouex pipefail
 
 # INSTALL GSCHEMA OVERRIDE
 # ----------------------------------------------------
-cat > /usr/lib/glib-2.0/schemas/zz1-app-folders.gschema.override <<'EOF'
+cat > /usr/share/glib-2.0/schemas/zz1-app-folders.gschema.override <<'EOF'
 [org.gnome.desktop.app-folders]
 folder-children=[]
 
