@@ -6,7 +6,7 @@
   ],
   "transports": {
     "docker": {
-      "ghcr.io/skyler544": [
+      "ghcr.io/skyler544/minus-one": [
         {
           "type": "sigstoreSigned",
           "keyPath": "/etc/pki/containers/skyler544.pub",
