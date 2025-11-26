@@ -54,7 +54,6 @@ Description=Run install-system-flatpaks after connecting to the network after fi
 
 [Timer]
 OnBootSec=2min
-Unit=install-system-flatpaks.service
 Persistent=yes
 
 [Install]

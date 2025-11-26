@@ -53,7 +53,6 @@ Description=Run replace-fedora-flatpaks after connecting to the network after fi
 
 [Timer]
 OnBootSec=1min
-Unit=replace-installed-fedora-flatpaks.service
 Persistent=yes
 
 [Install]
