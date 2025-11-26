@@ -11,8 +11,6 @@ RUN /tmp/build_files/enable-docker.sh
 RUN /tmp/build_files/packages.sh
 RUN /tmp/build_files/ensure-flathub.sh
 RUN /tmp/build_files/install-system-flatpaks.sh
-RUN /tmp/build_files/bazaar-search.sh
-RUN /tmp/build_files/misc-gschema-overrides.sh
 RUN /tmp/build_files/cleanup.sh
 
 
