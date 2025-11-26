@@ -114,5 +114,5 @@ jobs:
           done
         env:
           TAGS: ${{ steps.push.outputs.digest }}
-          COSIGN_EXPERIMENTAL: false
+          COSIGN_EXPERIMENTAL: true
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
