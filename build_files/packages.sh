@@ -23,6 +23,7 @@ INCLUDED_PACKAGES=(
     distrobox
     emacs
     gnome-tweaks
+    virt-manager
 )
 
 
