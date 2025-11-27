@@ -19,6 +19,7 @@ EXCLUDED_PACKAGES=(
 
 INCLUDED_PACKAGES=(
     adw-gtk3-theme
+    ddcutil
     distrobox
     emacs
     gnome-tweaks
