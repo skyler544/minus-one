@@ -30,6 +30,25 @@ EOF
 systemd-tmpfiles --create
 
 
+# FIX GUEST NETWORKING
+# ----------------------------------------------------
+cat > /usr/lib/systemd/system/libvirt-iptables.service <<'EOF'
+[Unit]
+Description=Setup libvirt iptables rules
+After=virtnetworkd.service
+Requires=virtnetworkd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/iptables -I FORWARD -i virbr0 -j ACCEPT
+ExecStart=/usr/sbin/iptables -I FORWARD -o virbr0 -j ACCEPT
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
 # START SERVICES
 # ----------------------------------------------------
-systemctl enable libvirtd virtlogd virtqemud.socket virtqemud.service
+systemctl enable virtqemud virtnetworkd libvirt-iptables
