@@ -3,6 +3,15 @@ set -ouex pipefail
 DNF="dnf --quiet --assumeyes"
 
 
+# FIX DIRECTORIES
+# ----------------------------------------------------
+cat > /usr/lib/tmpfiles.d/libvirt.conf <<'EOF'
+d /var/lib/libvirt/qemu 0755 qemu qemu -
+d /var/run/libvirt 0755 root root -
+EOF
+systemd-tmpfiles --create
+
+
 # INSTALL VIRT-MANAGER
 # ----------------------------------------------------
 $DNF install @virtualization
@@ -11,12 +20,15 @@ $DNF install @virtualization
 # FIX GROUP
 # ----------------------------------------------------
 cat > /usr/lib/sysusers.d/50-libvirt.conf <<'EOF'
-# Ensure virt group exists
+# Ensure libvirt/qemu groups exist
+g qemu - - - -
 g libvirt - - - -
+u qemu - qemu - - - - - - QEMU\ emulator
+u libvirt - libvirt - - - - - - Libvirt\ daemon
 EOF
 systemd-sysusers
 
 
-# START SERVICE
+# START SERVICES
 # ----------------------------------------------------
-systemctl enable libvirtd
+systemctl enable libvirtd virtlogd virtqemud.socket virtqemud.service
