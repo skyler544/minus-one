@@ -22,8 +22,8 @@ INCLUDED_PACKAGES=(
     ddcutil
     distrobox
     emacs
+    libvirt-daemon
     gnome-tweaks
-    virt-manager
 )
 
 
