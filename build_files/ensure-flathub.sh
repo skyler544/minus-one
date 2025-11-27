@@ -45,6 +45,7 @@ ConditionPathExists=!/var/lib/flatpak/.minus-one-flatpaks-replaced
 [Service]
 Type=oneshot
 ExecStart=-/bin/bash -c '/usr/bin/flatpak install --reinstall --noninteractive --assumeyes flathub $(/usr/bin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)'
+ExecStart=/usr/bin/flatpak uninstall --unused --assumeyes --noninteractive
 ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpaks-replaced
 EOF
 cat > /usr/lib/systemd/system/replace-installed-fedora-flatpaks.timer <<'EOF'
