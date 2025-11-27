@@ -3,15 +3,6 @@ set -ouex pipefail
 DNF="dnf --quiet --assumeyes"
 
 
-# FIX DIRECTORIES
-# ----------------------------------------------------
-cat > /usr/lib/tmpfiles.d/libvirt.conf <<'EOF'
-d /var/lib/libvirt/qemu 0755 qemu qemu -
-d /var/run/libvirt 0755 root root -
-EOF
-systemd-tmpfiles --create
-
-
 # INSTALL VIRT-MANAGER
 # ----------------------------------------------------
 $DNF install @virtualization
