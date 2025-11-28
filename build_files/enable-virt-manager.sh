@@ -53,4 +53,5 @@ EOF
 # ----------------------------------------------------
 systemctl enable libvirt-iptables \
           virtqemud{,-admin,-ro}.socket \
-          virtnetworkd{,-admin,-ro}.socket
+          virtnetworkd{,-admin,-ro}.socket \
+          virtstoraged{,-admin,-ro}.socket
