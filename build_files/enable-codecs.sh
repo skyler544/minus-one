@@ -15,11 +15,6 @@ $DNF install \
 $DNF swap ffmpeg-free ffmpeg --allowerasing
 
 
-# UPDATE CODECS
-# ----------------------------------------------------
-$DNF update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
-
-
 # UPDATE DRIVERS
 # ----------------------------------------------------
 $DNF install intel-media-driver
