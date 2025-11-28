@@ -9,6 +9,7 @@ This image is centered around the idea of a "zero maintenance base system." Targ
 
 ## Main features
 - Docker and Podman are included out-of-the box.
+- Codecs from `rpmfusion` are included out of the box.
 - User apps are provided via Flathub flatpaks and distrobox.
 - Emacs is installed on the base image for maximal compatibility.
 - No GNOME Software; [use Bazaar](https://flathub.org/en/apps/io.github.kolunmi.Bazaar) if you want a flatpak app store.
@@ -32,7 +33,7 @@ sudo bootc switch ghcr.io/skyler544/minus-one && systemctl reboot
 6. Use your machine normally. Updates happen silently in the background; the base system is updated once a week and flatpaks are updated once a day. Base system updates require a reboot.
 
 ## Why not use bluefin?
-I decided to build this derivative from upstream Silverblue to test my skills and design an image more tailored to my own workflow. After using Bluefin for around a year, I've learned a lot about container technologies and have developed a container-centric workflow that works for me. Deriving from upstream Silverblue and adding only what I want makes more sense to me than going from Bluefin and removing things I don't want, especially because the Bluefin project has a lot of churn around features that I don't use or care about like GNOME shell extensions and Microsoft VS Code.
+I decided to build this derivative from upstream Silverblue to test my skills and design an image more tailored to my own workflow. After using Bluefin for around a year, I've learned a lot about container technologies and have developed a container-centric workflow that works for me. Deriving from upstream Silverblue and adding only what I want makes more sense to me than starting from Bluefin and removing things I don't use or care about.
 
 ## Credits
 - [Ublue's image template](https://github.com/ublue-os/image-template) for teaching me how to build an image like this in the first place
