@@ -17,7 +17,7 @@ $DNF swap ffmpeg-free ffmpeg --allowerasing
 
 # UPDATE CODECS
 # ----------------------------------------------------
-$DNF @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+$DNF update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
 
 # UPDATE DRIVERS
