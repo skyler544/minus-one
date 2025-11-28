@@ -12,6 +12,7 @@ EXCLUDED_PACKAGES=(
     firefox
     gnome-software
     gnome-software-rpm-ostree
+    gnome-system-monitor
     gnome-tour
     google-noto-color-emoji-fonts
     malcontent-control
