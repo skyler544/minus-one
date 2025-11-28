@@ -4,6 +4,41 @@ set -ouex pipefail
 
 # JANKY SERVICE
 # ----------------------------------------------------
+FLATPAKS=(
+    "ca.desrt.dconf-editor"
+    "com.github.tchx84.Flatseal"
+    "com.mattjakeman.ExtensionManager"
+    "com.ranfdev.DistroShelf"
+    "io.github.celluloid_player.Celluloid"
+    "io.github.fabrialberio.pinapp"
+    "io.github.flattool.Ignition"
+    "io.github.flattool.Warehouse"
+    "io.github.kolunmi.Bazaar"
+    "io.github.vikdevelop.SaveDesktop"
+    "io.missioncenter.MissionCenter"
+    "io.podman_desktop.PodmanDesktop"
+    "org.gnome.Calculator"
+    "org.gnome.Calendar"
+    "org.gnome.Evolution"
+    "org.gnome.FileRoller"
+    "org.gnome.Firmware"
+    "org.gnome.Logs"
+    "org.gnome.Loupe"
+    "org.gnome.Loupe.HEIC"
+    "org.gnome.NautilusPreviewer"
+    "org.gnome.Papers"
+    "org.gnome.SimpleScan"
+    "org.gnome.Snapshot"
+    "org.gnome.SoundRecorder"
+    "org.gnome.Weather"
+    "org.gnome.baobab"
+    "org.gnome.clocks"
+    "org.gtk.Gtk3theme.adw-gtk3"
+    "org.gtk.Gtk3theme.adw-gtk3-dark"
+    "org.mozilla.firefox"
+    "org.pipewire.Helvum"
+    "page.tesk.Refine"
+)
 cat > /usr/lib/systemd/system/install-system-flatpaks.service <<'EOF'
 [Unit]
 Description=Install system flatpaks.
@@ -13,41 +48,13 @@ ConditionPathExists=!/var/lib/flatpak/.minus-one-system-flatpaks-installed
 
 [Service]
 Type=oneshot
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive ca.desrt.dconf-editor'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive com.github.tchx84.Flatseal'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive com.mattjakeman.ExtensionManager'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive com.ranfdev.DistroShelf'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.github.celluloid_player.Celluloid'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.github.fabrialberio.pinapp'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.github.flattool.Ignition'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.github.flattool.Warehouse'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.github.kolunmi.Bazaar'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.github.vikdevelop.SaveDesktop'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.missioncenter.MissionCenter'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive io.podman_desktop.PodmanDesktop'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Calculator'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Calendar'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Evolution'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.FileRoller'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Firmware'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Logs'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Loupe'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Loupe.HEIC'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.NautilusPreviewer'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Papers'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.SimpleScan'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Snapshot'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.SoundRecorder'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.Weather'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.baobab'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gnome.clocks'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gtk.Gtk3theme.adw-gtk3'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.gtk.Gtk3theme.adw-gtk3-dark'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.mozilla.firefox'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive org.pipewire.Helvum'
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --assumeyes --noninteractive page.tesk.Refine'
-ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-system-flatpaks-installed
 EOF
+for pkg in "${FLATPAKS[@]}"; do
+    echo "ExecStart=-/usr/bin/flatpak install --assumeyes --noninteractive $pkg" \
+         >> /usr/lib/systemd/system/install-system-flatpaks.service
+done
+echo "ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-system-flatpaks-installed" \
+     >> /usr/lib/systemd/system/install-system-flatpaks.service
 cat > /usr/lib/systemd/system/install-system-flatpaks.timer <<'EOF'
 [Unit]
 Description=Run install-system-flatpaks after connecting to the network after first boot.
