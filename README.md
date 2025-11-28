@@ -29,7 +29,7 @@ sudo bootc switch ghcr.io/skyler544/minus-one && systemctl reboot
 > GNOME Software will immediately start trying to update you to the latest Fedora, which could block you from using `bootc`. You may therefore need to run `rpm-ostree cancel` in the terminal before using `bootc switch`.
 
 4. Once the machine has rebooted and you've logged in for the first time, go and grab a cup of coffee while the Fedora flatpaks are replaced by Flathub equivalents and a useful set of default flatpaks are installed. This happens in the background and may take around 15 minutes depending on your internet connection speed.
-5. Optionally, add your user to the `docker` group: `sudo usermod -aG docker "$USER"`. Log out and back in for this to take effect.
+5. Optionally, add your user to the `docker` and `libvirt` groups: `sudo usermod -aG docker,libvirt "$USER"`. Log out and back in for this to take effect.
 6. Use your machine normally. Updates happen silently in the background; the base system is updated once a week and flatpaks are updated once a day. Base system updates require a reboot.
 
 ## Why not use bluefin?
