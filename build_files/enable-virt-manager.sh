@@ -6,9 +6,9 @@ DNF="dnf --quiet --assumeyes"
 # INSTALL VIRT-MANAGER
 # ----------------------------------------------------
 VIRTUALIZATION_PACKAGES=(
-    virt-manager
     qemu
     qemu-kvm
+    virt-manager
 )
 $DNF install "${VIRTUALIZATION_PACKAGES[@]}"
 
@@ -17,11 +17,11 @@ $DNF install "${VIRTUALIZATION_PACKAGES[@]}"
 # ----------------------------------------------------
 cat > /usr/lib/sysusers.d/50-libvirt.conf <<'EOF'
 # Ensure libvirt/qemu groups exist
-g qemu - - - -
-g qat - - - -
 g libvirt - - - -
-u qemu - qemu - - - - - - QEMU\ emulator
+g qat - - - -
+g qemu - - - -
 u libvirt - libvirt - - - - - - Libvirt\ daemon
+u qemu - qemu - - - - - - QEMU\ emulator
 EOF
 systemd-sysusers
 

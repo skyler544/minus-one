@@ -16,6 +16,7 @@ EXCLUDED_PACKAGES=(
     gnome-tour
     google-noto-color-emoji-fonts
     malcontent-control
+    yelp
 )
 
 INCLUDED_PACKAGES=(

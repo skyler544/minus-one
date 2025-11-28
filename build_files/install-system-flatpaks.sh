@@ -14,7 +14,6 @@ FLATPAKS=(
     "io.github.flattool.Ignition"
     "io.github.flattool.Warehouse"
     "io.github.kolunmi.Bazaar"
-    "io.github.vikdevelop.SaveDesktop"
     "io.missioncenter.MissionCenter"
     "io.podman_desktop.PodmanDesktop"
     "org.gnome.Calculator"
