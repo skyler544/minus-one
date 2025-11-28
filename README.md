@@ -8,8 +8,8 @@ This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/
 This image is centered around the idea of a "zero maintenance base system." Targeting Fedora minus-one is intended to strike a balance between relatively recent packages for the base system but slower update churn and fewer regressions.
 
 ## Main features
-- Docker and Podman are included out-of-the box.
-- Codecs from `rpmfusion` are included out of the box.
+- Docker and Podman are included out-of-the-box.
+- Codecs from `rpmfusion` are included out-of-the-box.
 - User apps are provided via Flathub flatpaks and distrobox.
 - Emacs is installed on the base image for maximal compatibility.
 - No GNOME Software; [use Bazaar](https://flathub.org/en/apps/io.github.kolunmi.Bazaar) if you want a flatpak app store.
