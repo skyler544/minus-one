@@ -6,25 +6,9 @@ DNF="dnf --quiet --assumeyes"
 # INSTALL VIRT-MANAGER
 # ----------------------------------------------------
 VIRTUALIZATION_PACKAGES=(
-    guestfs-tools
-    libguestfs
-    libguestfs-xfs
-    libvirt-client
-    libvirt-daemon
-    libvirt-daemon-config-network
-    libvirt-daemon-driver-interface
-    libvirt-daemon-driver-network
-    libvirt-daemon-driver-nodedev
-    libvirt-daemon-driver-nwfilter
-    libvirt-daemon-driver-qemu
-    libvirt-daemon-driver-secret
-    libvirt-daemon-driver-storage-core
-    libvirt-dbus
-    netcat
+    virt-manager
     qemu
-    qemu-img
-    swtpm
-    virt-install
+    qemu-kvm
 )
 $DNF install "${VIRTUALIZATION_PACKAGES[@]}"
 
