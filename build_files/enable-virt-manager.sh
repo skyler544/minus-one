@@ -51,4 +51,6 @@ EOF
 
 # START SERVICES
 # ----------------------------------------------------
-systemctl enable libvirtd libvirt-iptables
+systemctl enable libvirt-iptables \
+          virtqemud{,-admin,-ro}.socket \
+          virtnetworkd{,-admin,-ro}.socket
