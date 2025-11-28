@@ -5,7 +5,28 @@ DNF="dnf --quiet --assumeyes"
 
 # INSTALL VIRT-MANAGER
 # ----------------------------------------------------
-$DNF install @virtualization
+VIRTUALIZATION_PACKAGES=(
+    guestfs-tools
+    libguestfs
+    libguestfs-xfs
+    libvirt-client
+    libvirt-daemon
+    libvirt-daemon-config-network
+    libvirt-daemon-driver-interface
+    libvirt-daemon-driver-network
+    libvirt-daemon-driver-nodedev
+    libvirt-daemon-driver-nwfilter
+    libvirt-daemon-driver-qemu
+    libvirt-daemon-driver-secret
+    libvirt-daemon-driver-storage-core
+    libvirt-dbus
+    netcat
+    qemu
+    qemu-img
+    swtpm
+    virt-install
+)
+$DNF install "${VIRTUALIZATION_PACKAGES[@]}"
 
 
 # FIX GROUP
@@ -21,37 +42,6 @@ EOF
 systemd-sysusers
 
 
-# FIX DIRECTORIES
-# ----------------------------------------------------
-cat > /usr/lib/tmpfiles.d/libvirt.conf <<'EOF'
-d /var/lib/libvirt/qemu 0755 qemu qemu -
-d /var/run/libvirt 0755 root root -
-EOF
-systemd-tmpfiles --create
-
-
-# FIX GUEST NETWORKING
-# ----------------------------------------------------
-cat > /usr/lib/systemd/system/libvirt-iptables.service <<'EOF'
-[Unit]
-Description=Setup libvirt iptables rules
-After=virtnetworkd.service
-Requires=virtnetworkd.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/sbin/iptables -I FORWARD -i virbr0 -j ACCEPT
-ExecStart=/usr/sbin/iptables -I FORWARD -o virbr0 -j ACCEPT
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-
 # START SERVICES
 # ----------------------------------------------------
-systemctl enable libvirt-iptables \
-          virtqemud{,-admin,-ro}.socket \
-          virtnetworkd{,-admin,-ro}.socket \
-          virtstoraged{,-admin,-ro}.socket
+systemctl enable virtqemud.socket virtnetworkd.socket virtstoraged.socket
