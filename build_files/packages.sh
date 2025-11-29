@@ -25,6 +25,7 @@ INCLUDED_PACKAGES=(
     distrobox
     emacs
     gnome-tweaks
+    tmux
 )
 
 
