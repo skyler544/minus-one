@@ -1,6 +1,6 @@
 # minus-one
 
-This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) tracking "the latest Fedora release minus one," hence the name. This project takes a lot of great ideas from [Universal Blue](https://github.com/ublue-os/bluefin) and [Bluefin](https://github.com/ublue-os/bluefin), and most of the design of this repository and build pipeline mimics their examples.
+This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) tracking "the latest Fedora release minus one," hence the name. This project takes a lot of great ideas from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://github.com/ublue-os/bluefin), and most of the design of this repository and build pipeline mimics their examples.
 
 ---
 
