@@ -17,8 +17,8 @@ $DNF install "${VIRTUALIZATION_PACKAGES[@]}"
 # ----------------------------------------------------
 cat > /usr/lib/sysusers.d/50-libvirt.conf <<'EOF'
 # Ensure libvirt/qemu groups exist
+g qat - - - -
 u libvirt - - - -
-u qemu - - - -
 EOF
 systemd-sysusers
 
