@@ -21,7 +21,7 @@ g qat - - - -
 u libvirt - - - -
 EOF
 # remove broken conf file
-rm -rf /usr/lib/sysusers.d/qemu.conf || true
+rm -rf /usr/lib/sysusers.d/libvirt-qemu.conf || true
 systemd-sysusers
 
 
