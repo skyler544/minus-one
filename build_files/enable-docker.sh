@@ -7,11 +7,9 @@ DNF="dnf --quiet --assumeyes"
 # ----------------------------------------------------
 DOCKER_PACKAGES=(
      containerd.io
-     docker-buildx-plugin
      docker-ce
      docker-ce-cli
      docker-compose-plugin
-     docker-model-plugin
 )
 $DNF config-manager addrepo \
      --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
