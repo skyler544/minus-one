@@ -25,7 +25,6 @@ INCLUDED_PACKAGES=(
     distrobox
     emacs
     evolution-ews-core
-    gnome-tweaks
     tmux
 )
 
