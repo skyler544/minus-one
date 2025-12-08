@@ -10,20 +10,7 @@ $DNF install \
      https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 
-# INSTALL FFMPEG
-# ----------------------------------------------------
-$DNF swap ffmpeg-free ffmpeg --allowerasing
-
-
-# UPDATE CODECS
-# ----------------------------------------------------
-$DNF group install multimedia \
-     --setopt="install_weak_deps=False" \
-     --exclude=PackageKit-gstreamer-plugin
-
-
 # UPDATE DRIVERS
 # ----------------------------------------------------
-$DNF install intel-media-driver libva-intel-media-driver
+$DNF install intel-media-driver
 $DNF swap mesa-va-drivers mesa-va-drivers-freeworld
-$DNF swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
