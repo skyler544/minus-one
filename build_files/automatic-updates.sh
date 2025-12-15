@@ -12,6 +12,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
+ExecStartPre=/usr/bin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
 ExecStart=/usr/bin/bootc update
 
 [Install]
@@ -40,6 +41,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
+ExecStartPre=/usr/bin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
 ExecStart=/usr/bin/rpm-ostree upgrade
 
 [Install]
@@ -68,6 +70,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
+ExecStartPre=/usr/bin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
 ExecStart=/usr/bin/flatpak update --assumeyes --noninteractive
 
 [Install]
