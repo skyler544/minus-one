@@ -7,9 +7,13 @@ DNF="dnf --quiet --assumeyes"
 # ----------------------------------------------------
 EXCLUDED_PACKAGES=(
     default-fonts-core-emoji
+    fedora-bookmarks
+    fedora-chromium-config
+    fedora-chromium-config-gnome
     fedora-flathub-remote
     fedora-third-party
     firefox
+    firefox-langpacks
     gnome-shell-extension-apps-menu
     gnome-shell-extension-background-logo
     gnome-shell-extension-launch-new-instance
