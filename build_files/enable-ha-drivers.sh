@@ -15,6 +15,11 @@ $DNF install \
 $DNF swap ffmpeg-free ffmpeg --allowerasing
 
 
+# HEIC SUPPORT
+# ----------------------------------------------------
+$DNF install libheif-tools libheif-freeworld
+
+
 # UPDATE CODECS
 # ----------------------------------------------------
 $DNF group install multimedia \
