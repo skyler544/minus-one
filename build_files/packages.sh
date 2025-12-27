@@ -14,7 +14,6 @@ EXCLUDED_PACKAGES=(
     fedora-third-party
     firefox
     firefox-langpacks
-    glycin # can be removed in fedora 43?
     gnome-shell-extension-apps-menu
     gnome-shell-extension-background-logo
     gnome-shell-extension-launch-new-instance
