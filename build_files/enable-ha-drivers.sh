@@ -17,7 +17,7 @@ $DNF swap ffmpeg-free ffmpeg --allowerasing
 
 # HEIC SUPPORT
 # ----------------------------------------------------
-$DNF install libheif-tools libheif-freeworld
+$DNF install libheif-tools libheif-freeworld ImageMagick-heic
 
 
 # UPDATE CODECS
