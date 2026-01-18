@@ -22,11 +22,11 @@ Before=flatpak-system-helper.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=-/usr/bin/flatpak remote-delete --force fedora
-ExecStart=-/usr/bin/flatpak remote-delete --force fedora-testing
-ExecStart=/usr/bin/flatpak remote-add --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
-ExecStart=/usr/bin/flatpak remote-modify --enable flathub
-ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
+ExecStart=-/usr/sbin/flatpak remote-delete --force fedora
+ExecStart=-/usr/sbin/flatpak remote-delete --force fedora-testing
+ExecStart=/usr/sbin/flatpak remote-add --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+ExecStart=/usr/sbin/flatpak remote-modify --enable flathub
+ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 
 [Install]
 WantedBy=multi-user.target
@@ -44,9 +44,9 @@ ConditionPathExists=!/var/lib/flatpak/.minus-one-flatpaks-replaced
 
 [Service]
 Type=oneshot
-ExecStart=-/bin/bash -c '/usr/bin/flatpak install --reinstall --noninteractive --assumeyes flathub $(/usr/bin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)'
-ExecStart=/usr/bin/flatpak uninstall --unused --assumeyes --noninteractive
-ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-flatpaks-replaced
+ExecStart=-/usr/sbin/bash -c '/usr/sbin/flatpak install --reinstall --noninteractive --assumeyes flathub $(/usr/sbin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)'
+ExecStart=/usr/sbin/flatpak uninstall --unused --assumeyes --noninteractive
+ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-flatpaks-replaced
 EOF
 cat > /usr/lib/systemd/system/replace-installed-fedora-flatpaks.timer <<'EOF'
 [Unit]
