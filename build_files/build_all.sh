@@ -3,6 +3,7 @@ set -ouex pipefail
 
 SCRIPTS=(
     ensure-flathub.sh
+    enable-sigstore.sh
     install-system-flatpaks.sh
     automatic-updates.sh
     enable-docker.sh

@@ -4,6 +4,9 @@ FROM quay.io/fedora-ostree-desktops/silverblue:42
 COPY build_files /build_files
 COPY mg /usr/bin/mg
 
+RUN mkdir -p /usr/lib/minus-one/sigstore
+COPY cosign.pub /usr/lib/minus-one/sigstore/minus-one.pub
+
 
 # ASSEMBLE
 # ----------------------------------------------------

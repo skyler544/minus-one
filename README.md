@@ -33,73 +33,7 @@ sudo bootc switch ghcr.io/skyler544/minus-one && systemctl reboot
 6. Use your machine normally. Updates happen silently in the background; the base system is updated once a week and flatpaks are updated once a day. Base system updates require a reboot.
 
 ### Switch to signed image (optional)
-`minus-one` is signed using [sigstore/cosign](https://github.com/sigstore/cosign). If you want to switch to the signed image, you will need to perform some manual steps.
-> [!CAUTION]
-> These steps worked for me but this technology is evolving rapidly and I may not keep this up to date. It would be better to move this setup onto the image itself at some point.
-#### Install the keyfile
-```bash
-$ sudo ostree admin pin 0
-
-$ sudo mkdir -p /etc/pki/containers
-$ curl -O "https://github.com/skyler544/minus-one/blob/main/cosign.pub"
-$ sudo cp cosign.pub /etc/pki/containers/
-```
-
-If selinux is enabled:
-```bash
-$ sudo restorecon -RFv /etc/pki/containers
-```
-
-#### Configure sigstore
-Place this file at `/etc/containers/registries.d/ghcr.io.yaml`:
-```yaml
-docker:
-  ghcr.io/skyler544:
-    use-sigstore-attachments: true
-```
-
-If selinux is enabled:
-```bash
-$ sudo restorecon -RFv /etc/containers/registries.d/ghcr.io.yaml
-```
-
-Replace the contents of this file at `/etc/containers/policy.json`:
-```json
-{
-  "default": [
-    {
-      "type": "reject"
-    }
-  ],
-  "transports": {
-    "docker": {
-      "ghcr.io/skyler544": [
-        {
-          "type": "sigstoreSigned",
-          "keyPath": "/etc/pki/containers/cosign.pub",
-          "signedIdentity": {
-            "type": "matchRepository"
-          }
-        }
-      ],
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    },
-    "docker-daemon": {
-      "": [
-        {
-          "type": "insecureAcceptAnything"
-        }
-      ]
-    }
-  }
-}
-```
-
-#### Switch to the signed image
+`minus-one` is signed using [sigstore/cosign](https://github.com/sigstore/cosign).
 ```bash
 $ sudo bootc switch --enforce-container-sigpolicy ghcr.io/skyler544/minus-one
 $ systemctl reboot
