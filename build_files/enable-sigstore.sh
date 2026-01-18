@@ -57,7 +57,6 @@ ConditionPathExists=!/var/lib/.minus-one-signed-registries-initialized
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/ostree admin pin 0
 ExecStart=/usr/sbin/mkdir -p /etc/pki/containers /etc/containers/registries.d
 ExecStart=/usr/sbin/cp /usr/lib/minus-one/sigstore/minus-one.pub /etc/pki/containers/
 ExecStart=/usr/sbin/cp /usr/lib/minus-one/sigstore/ghcr.io.yaml /etc/containers/registries.d/
