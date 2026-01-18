@@ -12,8 +12,8 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStartPre=/usr/bin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
-ExecStart=/usr/bin/bootc update
+ExecStartPre=/usr/sbin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
+ExecStart=/usr/sbin/bootc update
 
 [Install]
 WantedBy=default.target
@@ -41,8 +41,8 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStartPre=/usr/bin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
-ExecStart=/usr/bin/rpm-ostree upgrade
+ExecStartPre=/usr/sbin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
+ExecStart=/usr/sbin/rpm-ostree upgrade
 
 [Install]
 WantedBy=default.target
@@ -70,8 +70,8 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStartPre=/usr/bin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
-ExecStart=/usr/bin/flatpak update --assumeyes --noninteractive
+ExecStartPre=/usr/sbin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
+ExecStart=/usr/sbin/flatpak update --assumeyes --noninteractive
 
 [Install]
 WantedBy=default.target

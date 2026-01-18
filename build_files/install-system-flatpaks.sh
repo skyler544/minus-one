@@ -49,10 +49,10 @@ ConditionPathExists=!/var/lib/flatpak/.minus-one-system-flatpaks-installed
 Type=oneshot
 EOF
 for pkg in "${FLATPAKS[@]}"; do
-    echo "ExecStart=-/usr/bin/flatpak install --assumeyes --noninteractive $pkg" \
+    echo "ExecStart=-/usr/sbin/flatpak install --assumeyes --noninteractive $pkg" \
          >> /usr/lib/systemd/system/install-system-flatpaks.service
 done
-echo "ExecStartPost=/usr/bin/touch /var/lib/flatpak/.minus-one-system-flatpaks-installed" \
+echo "ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-system-flatpaks-installed" \
      >> /usr/lib/systemd/system/install-system-flatpaks.service
 cat > /usr/lib/systemd/system/install-system-flatpaks.timer <<'EOF'
 [Unit]
