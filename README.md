@@ -33,7 +33,7 @@ sudo bootc switch ghcr.io/skyler544/minus-one && systemctl reboot
 6. Use your machine normally. Updates happen silently in the background; the base system is updated once a week and flatpaks are updated once a day. Base system updates require a reboot.
 
 ### Switch to signed image (optional)
-`minus-one` is signed using [sigstore/cosign](https://github.com/sigstore/cosign).
+This step can only be performed after rebasing to the unsigned image first. That is, perform the steps above first, then do this step. `minus-one` is signed using [sigstore/cosign](https://github.com/sigstore/cosign).
 ```bash
 $ sudo bootc switch --enforce-container-sigpolicy ghcr.io/skyler544/minus-one
 $ systemctl reboot
