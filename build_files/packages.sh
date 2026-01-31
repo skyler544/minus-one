@@ -43,6 +43,10 @@ INCLUDED_PACKAGES=(
 $DNF remove "${EXCLUDED_PACKAGES[@]}"
 $DNF install "${INCLUDED_PACKAGES[@]}"
 
+# https://bodhi.fedoraproject.org/updates/FEDORA-2026-293c809594
+# bluetooth fix
+$DNF clean all && $DNF install https://kojipkgs.fedoraproject.org//packages/gnome-shell/48.7/3.fc42/x86_64/gnome-shell-48.7-3.fc42.x86_64.rpm
+
 
 # CLEANUP
 # ----------------------------------------------------
