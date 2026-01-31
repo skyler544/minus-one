@@ -43,6 +43,10 @@ INCLUDED_PACKAGES=(
 $DNF remove "${EXCLUDED_PACKAGES[@]}"
 $DNF install "${INCLUDED_PACKAGES[@]}"
 
+# https://bodhi.fedoraproject.org/updates/FEDORA-2026-293c809594
+# fix for bluetooth bug, remove me when this package makes it to stable
+$DNF upgrade --enablerepo=updates-testing --refresh --advisory=FEDORA-2026-293c809594
+
 
 # CLEANUP
 # ----------------------------------------------------
