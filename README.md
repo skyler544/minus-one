@@ -39,6 +39,12 @@ $ sudo bootc switch --enforce-container-sigpolicy ghcr.io/skyler544/minus-one
 $ systemctl reboot
 ```
 
+## Actions
+- `build.yml`: The image builds once a week at 03:14 UTC on Sundays via GitHub Actions.
+- `clean.yml`: Images older than 90 days are at 03:19 UTC on the first of each month via GitHub Actions.
+
+The uneven times are chosen because it seems to increase the likelihood of the jobs actually running at the scheduled time. Choosing something like 00:00 seems to result in delays of up to 45 minutes before the job even starts.
+
 ---
 
 ## Why not use bluefin?
