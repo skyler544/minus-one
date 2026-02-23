@@ -8,7 +8,6 @@ SCRIPTS=(
     automatic-updates.sh
     enable-docker.sh
     enable-ha-drivers.sh
-    enable-virt-manager.sh
     packages.sh
     cleanup.sh
 )
