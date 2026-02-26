@@ -1,16 +1,15 @@
 #!/bin/bash
 set -ouex pipefail
 
-
 # SIGSTORE FILES
 # ----------------------------------------------------
-cat > /usr/lib/minus-one/sigstore/ghcr.io.yaml <<'EOF'
+cat >/usr/lib/minus-one/sigstore/ghcr.io.yaml <<'EOF'
 docker:
   ghcr.io/skyler544:
     use-sigstore-attachments: true
 EOF
 
-cat > /usr/lib/minus-one/sigstore/policy.json <<'EOF'
+cat >/usr/lib/minus-one/sigstore/policy.json <<'EOF'
 {
   "default": [
     {
@@ -45,10 +44,9 @@ cat > /usr/lib/minus-one/sigstore/policy.json <<'EOF'
 }
 EOF
 
-
 # INSTALL SIGSTORE CONFIG FILES
 # ----------------------------------------------------
-cat > /usr/lib/systemd/system/enable-signed-registries.service <<'EOF'
+cat >/usr/lib/systemd/system/enable-signed-registries.service <<'EOF'
 [Unit]
 Description=Install sigstore key and container registry policy for signed images.
 Wants=network-online.target
@@ -67,7 +65,6 @@ ExecStartPost=/usr/sbin/touch /var/lib/.minus-one-signed-registries-initialized
 [Install]
 WantedBy=multi-user.target
 EOF
-
 
 # ENABLE SERVICE
 # ----------------------------------------------------

@@ -1,7 +1,6 @@
 #!/bin/bash
 set -ouex pipefail
 
-
 # JANKY SERVICE
 # ----------------------------------------------------
 FLATPAKS=(
@@ -38,7 +37,7 @@ FLATPAKS=(
     "org.pipewire.Helvum"
     "page.tesk.Refine"
 )
-cat > /usr/lib/systemd/system/install-system-flatpaks.service <<'EOF'
+cat >/usr/lib/systemd/system/install-system-flatpaks.service <<'EOF'
 [Unit]
 Description=Install system flatpaks.
 Wants=network-online.target
@@ -50,11 +49,11 @@ Type=oneshot
 EOF
 for pkg in "${FLATPAKS[@]}"; do
     echo "ExecStart=-/usr/sbin/flatpak install --assumeyes --noninteractive $pkg" \
-         >> /usr/lib/systemd/system/install-system-flatpaks.service
+        >>/usr/lib/systemd/system/install-system-flatpaks.service
 done
 echo "ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-system-flatpaks-installed" \
-     >> /usr/lib/systemd/system/install-system-flatpaks.service
-cat > /usr/lib/systemd/system/install-system-flatpaks.timer <<'EOF'
+    >>/usr/lib/systemd/system/install-system-flatpaks.service
+cat >/usr/lib/systemd/system/install-system-flatpaks.timer <<'EOF'
 [Unit]
 Description=Run install-system-flatpaks after connecting to the network after first boot.
 
@@ -65,7 +64,6 @@ Persistent=yes
 [Install]
 WantedBy=timers.target
 EOF
-
 
 # ENABLE SERVICE
 # ----------------------------------------------------

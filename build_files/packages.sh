@@ -2,7 +2,6 @@
 set -ouex pipefail
 DNF="dnf --quiet --assumeyes"
 
-
 # PACKAGE LISTS
 # ----------------------------------------------------
 EXCLUDED_PACKAGES=(
@@ -37,7 +36,6 @@ INCLUDED_PACKAGES=(
     tmux
 )
 
-
 # INSTALL PACKAGES
 # ----------------------------------------------------
 $DNF remove "${EXCLUDED_PACKAGES[@]}"
@@ -45,7 +43,6 @@ $DNF install "${INCLUDED_PACKAGES[@]}"
 
 # fix for bluetooth bug, remove me when moving to f43
 $DNF downgrade wireplumber wireplumber-libs
-
 
 # CLEANUP
 # ----------------------------------------------------

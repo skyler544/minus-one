@@ -1,19 +1,17 @@
 #!/bin/bash
 set -ouex pipefail
 
-
 # FLATHUB REPO
 # ----------------------------------------------------
 mkdir -p /etc/flatpak/remotes.d
 curl --retry 3 -Lo \
-     "/etc/flatpak/remotes.d/flathub.flatpakrepo" \
-     "https://dl.flathub.org/repo/flathub.flatpakrepo"
-
+    "/etc/flatpak/remotes.d/flathub.flatpakrepo" \
+    "https://dl.flathub.org/repo/flathub.flatpakrepo"
 
 # REPLACE FEDORA FLATPAK REMOTES
 # ----------------------------------------------------
 rm -f /usr/lib/systemd/system/flatpak-add-fedora-repos.service || true
-cat > /usr/lib/systemd/system/replace-fedora-flatpak-remotes.service <<'EOF'
+cat >/usr/lib/systemd/system/replace-fedora-flatpak-remotes.service <<'EOF'
 [Unit]
 Description=Add Flathub flatpak remotes and remove Fedora flatpak remotes.
 ConditionPathExists=!/var/lib/flatpak/.minus-one-flatpak-initialized
@@ -32,10 +30,9 @@ ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
 WantedBy=multi-user.target
 EOF
 
-
 # REPLACE FEDORA FLATPAKS
 # ----------------------------------------------------
-cat > /usr/lib/systemd/system/replace-installed-fedora-flatpaks.service <<'EOF'
+cat >/usr/lib/systemd/system/replace-installed-fedora-flatpaks.service <<'EOF'
 [Unit]
 Description=Replace all installed Fedora flatpaks with Flathub versions.
 Wants=network-online.target
@@ -48,7 +45,7 @@ ExecStart=-/usr/sbin/bash -c '/usr/sbin/flatpak install --reinstall --noninterac
 ExecStart=/usr/sbin/flatpak uninstall --unused --assumeyes --noninteractive
 ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-flatpaks-replaced
 EOF
-cat > /usr/lib/systemd/system/replace-installed-fedora-flatpaks.timer <<'EOF'
+cat >/usr/lib/systemd/system/replace-installed-fedora-flatpaks.timer <<'EOF'
 [Unit]
 Description=Run replace-fedora-flatpaks after connecting to the network after first boot.
 
@@ -59,7 +56,6 @@ Persistent=yes
 [Install]
 WantedBy=timers.target
 EOF
-
 
 # ENABLE SERVICES
 # ----------------------------------------------------

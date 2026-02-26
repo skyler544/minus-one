@@ -1,10 +1,9 @@
 #!/bin/bash
 set -ouex pipefail
 
-
 # BOOTC
 # ----------------------------------------------------
-cat > /usr/lib/systemd/system/update-bootc-deployment.service <<'EOF'
+cat >/usr/lib/systemd/system/update-bootc-deployment.service <<'EOF'
 [Unit]
 Description=Update bootc deployment
 After=network-online.target
@@ -18,7 +17,7 @@ ExecStart=/usr/sbin/bootc update
 [Install]
 WantedBy=default.target
 EOF
-cat > /usr/lib/systemd/system/update-bootc-deployment.timer <<'EOF'
+cat >/usr/lib/systemd/system/update-bootc-deployment.timer <<'EOF'
 [Unit]
 Description=Update bootc deployment weekly
 
@@ -30,10 +29,9 @@ Persistent=true
 WantedBy=timers.target
 EOF
 
-
 # RPM-OSTREE
 # ----------------------------------------------------
-cat > /usr/lib/systemd/system/update-rpm-ostree-deployment.service <<'EOF'
+cat >/usr/lib/systemd/system/update-rpm-ostree-deployment.service <<'EOF'
 [Unit]
 Description=Update rpm-ostree deployment
 After=network-online.target
@@ -47,7 +45,7 @@ ExecStart=/usr/sbin/rpm-ostree upgrade
 [Install]
 WantedBy=default.target
 EOF
-cat > /usr/lib/systemd/system/update-rpm-ostree-deployment.timer <<'EOF'
+cat >/usr/lib/systemd/system/update-rpm-ostree-deployment.timer <<'EOF'
 [Unit]
 Description=Update rpm-ostree deployment weekly
 
@@ -59,10 +57,9 @@ Persistent=true
 WantedBy=timers.target
 EOF
 
-
 # FLATPAK
 # ----------------------------------------------------
-cat > /usr/lib/systemd/system/update-flatpaks.service <<'EOF'
+cat >/usr/lib/systemd/system/update-flatpaks.service <<'EOF'
 [Unit]
 Description=Update Flatpaks
 After=network-online.target
@@ -76,7 +73,7 @@ ExecStart=/usr/sbin/flatpak update --assumeyes --noninteractive
 [Install]
 WantedBy=default.target
 EOF
-cat > /usr/lib/systemd/system/update-flatpaks.timer <<'EOF'
+cat >/usr/lib/systemd/system/update-flatpaks.timer <<'EOF'
 [Unit]
 Description=Update Flatpaks daily
 
@@ -87,7 +84,6 @@ Persistent=true
 [Install]
 WantedBy=timers.target
 EOF
-
 
 # ENABLE SERVICES
 # ----------------------------------------------------

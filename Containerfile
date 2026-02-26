@@ -7,7 +7,6 @@ COPY mg /usr/bin/mg
 RUN mkdir -p /usr/lib/minus-one/sigstore
 COPY cosign.pub /usr/lib/minus-one/sigstore/minus-one.pub
 
-
 # ASSEMBLE
 # ----------------------------------------------------
 RUN --mount=type=tmpfs,dst=/var \
@@ -16,7 +15,6 @@ RUN --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/run \
     bash /build_files/build_all.sh
 RUN rm -rf /build_files
-
 
 # COMMIT
 # ----------------------------------------------------

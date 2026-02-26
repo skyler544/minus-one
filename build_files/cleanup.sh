@@ -1,7 +1,6 @@
 #!/bin/bash
 set -ouex pipefail
 
-
 # CLEANUP
 # ----------------------------------------------------
 # Remove all bootc lint violations
