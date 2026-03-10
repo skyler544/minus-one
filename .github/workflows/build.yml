@@ -1,9 +1,6 @@
 ---
 name: Build Image
 on:
-  pull_request:
-    branches:
-      - main
   schedule:
     - cron: "14 03 * * 0" # 03:14 UTC sunday
   push:
