@@ -19,7 +19,7 @@ This image is centered around the idea of a "zero-maintenance base system." Targ
 > You almost certainly do not want to use this image directly. You would be much better served by forking this repo or creating a new one entirely.
 
 If you still want to try this though, here's how to install it:
-1. Install Fedora Silverblue 42 using [this iso](https://dl.fedoraproject.org/pub/fedora/linux/releases/42/Silverblue/x86_64/iso/Fedora-Silverblue-ostree-x86_64-42-1.1.iso).
+1. Install Fedora Silverblue 43 using [this iso](https://dl.fedoraproject.org/pub/fedora/linux/releases/43/Silverblue/x86_64/iso/Fedora-Silverblue-ostree-x86_64-43-1.6.iso).
 2. Follow the normal Fedora setup.
 3. After creating your user, open the terminal and run the following command:
 ```bash
