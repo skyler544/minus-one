@@ -32,7 +32,6 @@ INCLUDED_PACKAGES=(
     ddcutil
     distrobox
     emacs
-    evolution-ews-core
     tmux
 )
 
