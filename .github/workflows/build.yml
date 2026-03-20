@@ -23,6 +23,7 @@ jobs:
   build_push:
     name: Build and push image
     runs-on: ubuntu-latest
+    environment: publish
 
     permissions:
       contents: read
@@ -62,7 +63,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -74,24 +75,21 @@ jobs:
         with:
           context: .
           file: ./Containerfile
-          push: ${{ github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+          push: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Install Cosign
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 # v4.1.0
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         with:
           cosign-release: 'v2.6.1'
 
       - name: Sign container image
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          while IFS= read -r tag; do
-            cosign sign -y --key env://COSIGN_PRIVATE_KEY "$tag"
-          done <<< "${{ steps.metadata.outputs.tags }}"
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build_push.outputs.digest }}"
         env:
-          COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
