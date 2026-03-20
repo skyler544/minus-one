@@ -12,7 +12,6 @@ COPY cosign.pub /usr/lib/minus-one/sigstore/minus-one.pub
 RUN --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=tmpfs,dst=/boot \
-    --mount=type=tmpfs,dst=/run \
     bash /build_files/build_all.sh
 RUN rm -rf /build_files
 
