@@ -1,6 +1,23 @@
 #!/bin/bash
 set -ouex pipefail
 
+# RPM-OSTREE
+# ----------------------------------------------------
+cat >/usr/lib/systemd/system/configure-rpm-ostree-autoupdate.service <<'EOF'
+[Unit]
+Description=Configure rpm-ostree automatic updates
+After=network-online.target
+ConditionPathExists=!/etc/rpm-ostreed.conf.d/.autoupdate-configured
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/bash -c "sed -i 's/#AutomaticUpdatePolicy=none/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf"
+ExecStartPost=/usr/sbin/touch /var/lib/rpm-ostree/.minus-one-autoupdate-configured
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
 # FLATPAK
 # ----------------------------------------------------
 cat >/usr/lib/systemd/system/update-flatpaks.service <<'EOF'
@@ -31,4 +48,5 @@ EOF
 
 # ENABLE SERVICE
 # ----------------------------------------------------
+systemctl enable configure-rpm-ostree-autoupdate.service
 systemctl enable update-flatpaks.timer
