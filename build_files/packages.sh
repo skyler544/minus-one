@@ -40,9 +40,6 @@ INCLUDED_PACKAGES=(
 $DNF remove "${EXCLUDED_PACKAGES[@]}"
 $DNF install "${INCLUDED_PACKAGES[@]}"
 
-# fix for bluetooth bug, remove me when moving to f43
-$DNF downgrade wireplumber wireplumber-libs
-
 # CLEANUP
 # ----------------------------------------------------
 $DNF autoremove && $DNF clean all
