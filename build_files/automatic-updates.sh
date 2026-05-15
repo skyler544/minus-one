@@ -7,7 +7,7 @@ cat >/usr/lib/systemd/system/configure-rpm-ostree-autoupdate.service <<'EOF'
 [Unit]
 Description=Configure rpm-ostree automatic updates
 After=network-online.target
-ConditionPathExists=!/etc/rpm-ostreed.conf.d/.autoupdate-configured
+ConditionPathExists=!/var/lib/rpm-ostree/.minus-one-autoupdate-configured
 
 [Service]
 Type=oneshot
