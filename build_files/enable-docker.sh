@@ -24,4 +24,4 @@ systemd-sysusers
 
 # START SERVICE
 # ----------------------------------------------------
-systemctl enable docker
+systemctl enable docker.socket
