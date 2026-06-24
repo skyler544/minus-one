@@ -33,6 +33,13 @@ cat >/usr/lib/minus-one/sigstore/policy.json <<'EOF'
         }
       ]
     },
+    "containers-storage": {
+      "": [
+        {
+          "type": "insecureAcceptAnything"
+        }
+      ]
+    },
     "docker-daemon": {
       "": [
         {
