@@ -32,8 +32,8 @@ INCLUDED_PACKAGES=(
     ddcutil
     distrobox
     emacs
+    podman-compose
     tmux
-	podman-compose
 )
 
 # INSTALL PACKAGES
