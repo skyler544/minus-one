@@ -24,5 +24,5 @@ $DNF group install multimedia \
 
 # UPDATE DRIVERS
 # ----------------------------------------------------
-$DNF install intel-media-driver
+$DNF install libva libva-utils intel-media-driver
 $DNF swap mesa-va-drivers mesa-va-drivers-freeworld
