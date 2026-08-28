@@ -32,7 +32,7 @@ TimeoutStartSec=2h
 ExecStartPre=/usr/sbin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
 ExecStart=/usr/sbin/flatpak repair
 ExecStart=/usr/sbin/flatpak uninstall --assumeyes --unused --noninteractive
-ExecStart=/usr/sbin/flatpak update --assumeyes --noninteractive
+ExecStart=/usr/sbin/flatpak update --assumeyes --noninteractive --no-static-deltas
 
 [Install]
 WantedBy=default.target
