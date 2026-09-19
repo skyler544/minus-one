@@ -1,0 +1,9 @@
+[Unit]
+Description=Install system Flatpaks after the first boot
+
+[Timer]
+OnBootSec=2min
+Persistent=yes
+
+[Install]
+WantedBy=timers.target

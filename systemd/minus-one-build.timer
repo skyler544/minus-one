@@ -1,0 +1,9 @@
+[Unit]
+Description=Build the local minus-one bootc image weekly
+
+[Timer]
+OnCalendar=Sun *-*-* 03:14:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -2,13 +2,10 @@
 set -ouex pipefail
 
 SCRIPTS=(
-    ensure-flathub.sh
-    install-system-flatpaks.sh
-    automatic-updates.sh
+    setup-flatpaks.sh
     enable-docker.sh
-    enable-ha-drivers.sh
+    enable-multimedia.sh
     packages.sh
-    cleanup.sh
 )
 
 for s in "${SCRIPTS[@]}"; do

@@ -1,0 +1,6 @@
+[Unit]
+Description=Report a failed local minus-one build
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/logger --priority=daemon.err Local minus-one image build failed
