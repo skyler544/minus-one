@@ -19,6 +19,7 @@ systemctl enable replace-installed-fedora-flatpaks.timer
 # ----------------------------------------------------
 systemctl enable update-flatpaks.timer
 systemctl enable install-system-flatpaks.timer
+systemctl enable minus-one-build.timer
 
 # INSTALL DOCKER
 # ----------------------------------------------------
