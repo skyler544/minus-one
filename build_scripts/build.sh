@@ -48,7 +48,8 @@ $DNF install \
 # MULTIMEDIA
 # ----------------------------------------------------
 $DNF swap ffmpeg-free ffmpeg --allowerasing
-$DNF install libheif-tools libheif-freeworld ImageMagick-heic
+$DNF install --allow-downgrade --allowerasing \
+    libheif-tools libheif-freeworld ImageMagick-heic
 $DNF group install multimedia \
     --setopt="install_weak_deps=False" \
     --exclude=PackageKit-gstreamer-plugin
