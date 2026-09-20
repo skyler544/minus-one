@@ -8,4 +8,5 @@ OnFailure=minus-one-build-failure.service
 Type=oneshot
 EnvironmentFile=/etc/minus-one-build.conf
 ExecStart=/usr/bin/bash ${MINUS_ONE_SOURCE}/local-build.sh
+ExecStart=/usr/bin/bootc upgrade
 TimeoutStartSec=infinity
