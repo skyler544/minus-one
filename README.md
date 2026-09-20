@@ -20,7 +20,7 @@ sudo ./bootstrap.sh
 ```
 
 The script records the repository's absolute path in
-`/etc/minus-one-build.conf`, builds `localhost/minus-one-<machine>:latest`, and stages
+`/etc/minus-one-build.conf`, builds `localhost/minus-one:latest`, and stages
 that image with `bootc switch`.
 
 Reboot when ready:
