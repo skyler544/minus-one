@@ -13,8 +13,7 @@ RUN --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=tmpfs,dst=/boot \
     bash /build_scripts/build.sh && \
-    bash /build_scripts/packages.sh && \
-    bash /build_scripts/cleanup.sh
+    bash /build_scripts/packages.sh
 RUN rm -rf /build_scripts
 
 # COMMIT
