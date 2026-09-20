@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ouex pipefail
+set -euxo pipefail
 
 if [[ $EUID -ne 0 ]]; then
     echo "Run bootstrap.sh as root." >&2

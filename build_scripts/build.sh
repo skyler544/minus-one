@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ouex pipefail
+set -euxo pipefail
 DNF="dnf --quiet --assumeyes"
 
 # FLATHUB REPO

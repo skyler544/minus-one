@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ouex pipefail
+set -euxo pipefail
 
 context=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 build_id=$(date +%s)
