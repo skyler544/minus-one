@@ -1,6 +1,6 @@
 # PREPARE
 # ----------------------------------------------------
-FROM quay.io/fedora-ostree-desktops/silverblue:44
+FROM quay.io/fedora/fedora-silverblue:44
 
 COPY build_scripts /build_scripts
 COPY mg /usr/bin/mg
