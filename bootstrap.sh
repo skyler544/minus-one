@@ -15,10 +15,6 @@ mv "$config" /etc/minus-one-build.conf
 
 "$source_dir/local-build.sh"
 
-podman image inspect \
-    --format 'Image ID: {{.Id}} Architecture: {{.Architecture}}' \
-    localhost/minus-one:latest
-
 bootc switch \
     --transport containers-storage \
     localhost/minus-one:latest
