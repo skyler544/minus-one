@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
-if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 KEYBOARD_ADDRESS" >&2
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 KEYBOARD_ADDRESS..." >&2
     exit 2
 fi
 
@@ -18,13 +18,6 @@ source "$env_file"
 : "${BLUETOOTH_ADAPTER_ADDRESS:?Set BLUETOOTH_ADAPTER_ADDRESS in .env}"
 
 adapter=$BLUETOOTH_ADAPTER_ADDRESS
-keyboard=$1
-address_pattern='^([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}$'
-
-if [[ ! $adapter =~ $address_pattern || ! $keyboard =~ $address_pattern ]]; then
-    echo "The adapter and keyboard addresses must be Bluetooth MAC addresses." >&2
-    exit 1
-fi
 
 sudo install -d -o root -g root -m 0700 \
     /var/lib/minus-one-secrets
@@ -37,28 +30,33 @@ cleanup() {
 trap cleanup EXIT
 
 sudo install -d -m 0700 \
-    "$staging/$adapter/$keyboard"
+    "$staging/$adapter"
 
 sudo install -m 0600 \
     "/var/lib/bluetooth/$adapter/settings" \
     "$staging/$adapter/settings"
 
-sudo install -m 0600 \
-    "/var/lib/bluetooth/$adapter/$keyboard/info" \
-    "$staging/$adapter/$keyboard/info"
+for keyboard in "$@"; do
+    sudo install -d -m 0700 \
+        "$staging/$adapter/$keyboard"
 
-if sudo test -f "/var/lib/bluetooth/$adapter/$keyboard/attributes"; then
     sudo install -m 0600 \
-        "/var/lib/bluetooth/$adapter/$keyboard/attributes" \
-        "$staging/$adapter/$keyboard/attributes"
-fi
+        "/var/lib/bluetooth/$adapter/$keyboard/info" \
+        "$staging/$adapter/$keyboard/info"
 
-if sudo test -f "/var/lib/bluetooth/$adapter/cache/$keyboard"; then
-    sudo install -d -m 0700 "$staging/$adapter/cache"
-    sudo install -m 0600 \
-        "/var/lib/bluetooth/$adapter/cache/$keyboard" \
-        "$staging/$adapter/cache/$keyboard"
-fi
+    if sudo test -f "/var/lib/bluetooth/$adapter/$keyboard/attributes"; then
+        sudo install -m 0600 \
+            "/var/lib/bluetooth/$adapter/$keyboard/attributes" \
+            "$staging/$adapter/$keyboard/attributes"
+    fi
+
+    if sudo test -f "/var/lib/bluetooth/$adapter/cache/$keyboard"; then
+        sudo install -d -m 0700 "$staging/$adapter/cache"
+        sudo install -m 0600 \
+            "/var/lib/bluetooth/$adapter/cache/$keyboard" \
+            "$staging/$adapter/cache/$keyboard"
+    fi
+done
 
 sudo tar \
     --create \
