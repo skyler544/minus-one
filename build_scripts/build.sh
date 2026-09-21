@@ -53,4 +53,4 @@ $DNF install --allow-downgrade --allowerasing \
 $DNF group install multimedia \
     --setopt="install_weak_deps=False" \
     --exclude=PackageKit-gstreamer-plugin
-$DNF install libva-utils
+$DNF install libva-utils mesa-va-drivers-freeworld
