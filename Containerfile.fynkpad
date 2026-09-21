@@ -1,0 +1,29 @@
+# PREPARE
+# ----------------------------------------------------
+FROM localhost/minus-one-base:latest
+
+COPY fynkpad/build.sh /build_scripts/fynkpad.sh
+COPY fynkpad/1password.sh /build_scripts/1password.sh
+COPY fynkpad/90-minus-one-machine.conf \
+    /usr/lib/dracut/dracut.conf.d/90-minus-one-machine.conf
+COPY fynkpad/nix.mount fynkpad/nix-store-prepare.service \
+    /usr/lib/systemd/system/
+COPY fynkpad/nix-store-dirs.conf /usr/lib/tmpfiles.d/
+
+# ASSEMBLE
+# ----------------------------------------------------
+ARG MINUS_ONE_BUILD_ID
+ARG POLICY_USER
+RUN --mount=type=tmpfs,dst=/var \
+    --mount=type=tmpfs,dst=/tmp \
+    --mount=type=tmpfs,dst=/boot \
+    --mount=type=secret,id=bluetooth \
+    test -n "$MINUS_ONE_BUILD_ID" && \
+    test -n "$POLICY_USER" && \
+    bash /build_scripts/fynkpad.sh
+RUN rm -rf /build_scripts
+
+# COMMIT
+# ----------------------------------------------------
+RUN ostree container commit
+RUN bootc container lint
