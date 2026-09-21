@@ -1,0 +1,11 @@
+[Unit]
+Description=Replace installed Fedora Flatpaks with Flathub versions
+Wants=network-online.target
+After=network-online.target replace-fedora-flatpak-remotes.service
+ConditionPathExists=!/var/lib/flatpak/.minus-one-flatpaks-replaced
+
+[Service]
+Type=oneshot
+ExecStart=-/usr/sbin/bash -c '/usr/sbin/flatpak install --reinstall --noninteractive --assumeyes flathub $(/usr/sbin/flatpak list --app-runtime=org.fedoraproject.Platform --columns=application | tail -n +1)'
+ExecStart=/usr/sbin/flatpak uninstall --unused --assumeyes --noninteractive
+ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-flatpaks-replaced

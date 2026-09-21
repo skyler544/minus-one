@@ -1,0 +1,9 @@
+[Unit]
+Description=Replace Fedora Flatpaks after the first boot
+
+[Timer]
+OnBootSec=1min
+Persistent=yes
+
+[Install]
+WantedBy=timers.target

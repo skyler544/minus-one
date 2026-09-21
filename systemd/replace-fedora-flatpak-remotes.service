@@ -1,0 +1,16 @@
+[Unit]
+Description=Add Flathub remotes and remove Fedora Flatpak remotes
+ConditionPathExists=!/var/lib/flatpak/.minus-one-flatpak-initialized
+Before=flatpak-system-helper.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=-/usr/sbin/flatpak remote-delete --force fedora
+ExecStart=-/usr/sbin/flatpak remote-delete --force fedora-testing
+ExecStart=/usr/sbin/flatpak remote-add --if-not-exists flathub /etc/flatpak/remotes.d/flathub.flatpakrepo
+ExecStart=/usr/sbin/flatpak remote-modify --enable flathub
+ExecStartPost=/usr/sbin/touch /var/lib/flatpak/.minus-one-flatpak-initialized
+
+[Install]
+WantedBy=multi-user.target

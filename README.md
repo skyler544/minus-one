@@ -1,49 +1,57 @@
 # minus-one
 
-This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) tracking "the latest Fedora release minus one," hence the name. This project takes a lot of great ideas from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://github.com/ublue-os/bluefin), and most of the design of this repository and build pipeline mimics their examples.
+This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) tracking "the latest Fedora release minus one," hence the name. This project takes a lot of great ideas from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://github.com/ublue-os/bluefin). This image builds locally via podman. The intended workflow is to check out this base branch and create a derivative image for the specific machine you're installing it on to add things like the correct video acceleration driver for your processor to the resulting deployment.
 
 ---
 
-## Rationale
-This image is centered around the idea of a "zero-maintenance base system." Targeting Fedora minus-one is intended to strike a balance between relatively recent packages for the base system but slower update churn and fewer regressions.
+## Bootstrap a machine
 
-## Main features
-- Docker and Podman are included out-of-the-box.
-- Codecs from `rpmfusion` are included out-of-the-box.
-- User apps are provided via Flathub flatpaks and distrobox.
-- Emacs is installed on the base image for maximal compatibility.
-- No GNOME Software; [use Bazaar](https://flathub.org/en/apps/io.github.kolunmi.Bazaar) if you want a flatpak app store.
+Install Fedora Silverblue using [this iso](https://download.fedoraproject.org/pub/fedora/linux/releases/44/Silverblue/x86_64/iso/Fedora-Silverblue-ostree-x86_64-44-1.7.iso) and clone this repository. Check
+out the branch for the machine. For example:
 
-### Usage
-> [!CAUTION]
-> You almost certainly do not want to use this image directly. You would be much better served by forking this repo or creating a new one entirely.
-
-If you still want to try this though, here's how to install it:
-1. Install Fedora Silverblue 44 using [this iso](https://download.fedoraproject.org/pub/fedora/linux/releases/44/Silverblue/x86_64/iso/Fedora-Silverblue-ostree-x86_64-44-1.7.iso).
-2. Follow the normal Fedora setup.
-3. After creating your user, open the terminal and run the following command:
-```bash
-sudo bootc switch ghcr.io/skyler544/minus-one && systemctl reboot
-```
-> [!TIP]
-> GNOME Software will immediately start trying to update you to the latest Fedora, which could block you from using `bootc`. You may therefore need to run `rpm-ostree cancel` in the terminal before using `bootc switch`.
-
-4. Once the machine has rebooted and you've logged in for the first time, go and grab a cup of coffee while the Fedora flatpaks are replaced by Flathub equivalents and a useful set of default flatpaks are installed. This happens in the background and may take around 15 minutes depending on your internet connection speed.
-5. Optionally, add your user to the `docker` group: `sudo usermod -aG docker "$USER"`. Log out and back in for this to take effect.
-6. Use your machine normally. Updates happen silently in the background; the base system is updated once a week and flatpaks are updated once a day. Base system updates require a reboot.
-
-### Switch to signed image (optional)
-This step can only be performed after rebasing to the unsigned image first. That is, perform the steps above first, then do this step. `minus-one` is signed using [sigstore/cosign](https://github.com/sigstore/cosign).
-```bash
-$ sudo bootc switch --enforce-container-sigpolicy ghcr.io/skyler544/minus-one
-$ systemctl reboot
+```sh
+git switch machine/buzz-lightyear
 ```
 
-## Actions
-- `build.yml`: The image builds once a week at 03:14 UTC on Sundays via GitHub Actions.
-- `clean.yml`: Images older than 90 days are deleted at 03:19 UTC on the first of each month via GitHub Actions.
+Review the branch, then run its bootstrap script:
 
-The uneven times are chosen because it seems to increase the likelihood of the jobs actually running at the scheduled time. Choosing something like 00:00 seems to result in delays of up to 45 minutes before the job even starts.
+```sh
+sudo ./bootstrap.sh
+```
+
+The script records the repository's absolute path in
+`/etc/minus-one-build.conf`, builds `localhost/minus-one:latest`, and stages
+that image with `bootc switch`.
+
+Reboot when ready:
+
+```sh
+systemctl reboot
+```
+
+## Run the build machinery
+
+The deployed image enables `minus-one-build.timer`. It starts the local image
+build each Sunday at 03:14 and runs a missed build after the machine starts.
+
+Start a build immediately with:
+
+```sh
+sudo systemctl start minus-one-build.service
+```
+
+Follow the build log with:
+
+```sh
+journalctl --follow --unit=minus-one-build.service
+```
+
+Check the timer with:
+
+```sh
+systemctl status minus-one-build.timer
+systemctl list-timers minus-one-build.timer
+```
 
 ---
 
