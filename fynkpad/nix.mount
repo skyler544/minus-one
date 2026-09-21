@@ -1,0 +1,17 @@
+[Unit]
+Description=Bind the persistent nix store onto /nix
+DefaultDependencies=no
+Conflicts=umount.target
+Requires=nix-store-prepare.service
+After=nix-store-prepare.service
+Before=umount.target systemd-tmpfiles-setup.service
+RequiresMountsFor=/var
+
+[Mount]
+What=/var/nix
+Where=/nix
+Type=none
+Options=bind
+
+[Install]
+WantedBy=sysinit.target
