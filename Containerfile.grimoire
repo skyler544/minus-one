@@ -3,8 +3,6 @@
 FROM localhost/minus-one-base:latest
 
 COPY grimoire/build.sh /build_scripts/grimoire.sh
-COPY grimoire/90-minus-one-machine.conf \
-    /usr/lib/dracut/dracut.conf.d/90-minus-one-machine.conf
 
 # ASSEMBLE
 # ----------------------------------------------------
