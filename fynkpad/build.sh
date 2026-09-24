@@ -30,13 +30,6 @@ rm -f "/tmp/$FIREZONE_RPM"
 
 systemctl enable firezone-client-tunnel.service
 
-# NIX
-# ----------------------------------------------------
-$DNF install nix nix-daemon
-systemctl enable nix-daemon.socket nix.mount
-rm -rf /nix
-mkdir -p /nix
-
 # 1PASSWORD
 # ----------------------------------------------------
 bash /build_scripts/1password.sh
