@@ -4,8 +4,6 @@ FROM localhost/minus-one-base:latest
 
 COPY fynkpad/build.sh /build_scripts/fynkpad.sh
 COPY fynkpad/1password.sh /build_scripts/1password.sh
-COPY fynkpad/90-minus-one-machine.conf \
-    /usr/lib/dracut/dracut.conf.d/90-minus-one-machine.conf
 COPY fynkpad/nix.mount fynkpad/nix-store-prepare.service \
     /usr/lib/systemd/system/
 COPY fynkpad/nix-store-dirs.conf /usr/lib/tmpfiles.d/
