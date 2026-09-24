@@ -33,7 +33,6 @@ INCLUDED_PACKAGES=(
     distrobox
     emacs
     podman-compose
-    tmux
 )
 
 # INSTALL PACKAGES
