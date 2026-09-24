@@ -6,6 +6,7 @@ COPY build_scripts /build_scripts
 COPY mg /usr/bin/mg
 COPY systemd /usr/lib/systemd/system
 COPY sysusers /usr/lib/sysusers.d
+COPY tmpfiles /usr/lib/tmpfiles.d
 
 # ASSEMBLE
 # ----------------------------------------------------

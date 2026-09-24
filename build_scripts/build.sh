@@ -54,3 +54,15 @@ $DNF group install multimedia \
     --setopt="install_weak_deps=False" \
     --exclude=PackageKit-gstreamer-plugin
 $DNF install libva-utils
+
+# NIX
+# ----------------------------------------------------
+$DNF install nix nix-daemon
+systemctl enable nix-daemon.socket nix.mount
+rm -rf /nix
+mkdir -p /nix
+
+cat >>/etc/selinux/targeted/contexts/files/file_contexts.subs_dist <<'EOF'
+/nix /usr
+/var/nix /usr
+EOF

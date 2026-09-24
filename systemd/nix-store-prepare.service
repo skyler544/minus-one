@@ -1,0 +1,14 @@
+[Unit]
+Description=Create the persistent nix store directory under /var
+Documentation=man:tmpfiles.d(5)
+DefaultDependencies=no
+Conflicts=shutdown.target
+Before=shutdown.target nix.mount
+After=local-fs.target
+RequiresMountsFor=/var
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/mkdir -p /var/nix
+ExecStartPost=/usr/bin/restorecon /var/nix
