@@ -15,6 +15,7 @@ trap cleanup EXIT
 # ----------------------------------------------------
 $DNF install intel-media-driver
 $DNF clean all
+rm -rf /run/dnf
 
 # BLUETOOTH PAIRING DATA
 # ----------------------------------------------------
