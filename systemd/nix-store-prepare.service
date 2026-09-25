@@ -12,3 +12,4 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/mkdir -p /var/nix
 ExecStartPost=/usr/bin/restorecon /var/nix
+ExecStartPost=-/usr/bin/restorecon -R /var/nix/var

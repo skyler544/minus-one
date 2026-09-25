@@ -63,6 +63,8 @@ rm -rf /nix
 mkdir -p /nix
 
 cat >>/etc/selinux/targeted/contexts/files/file_contexts.subs_dist <<'EOF'
-/nix /usr
-/var/nix /usr
+/nix/store /usr
+/nix/var /run
+/var/nix/store /usr
+/var/nix/var /run
 EOF
