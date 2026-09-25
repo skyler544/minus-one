@@ -37,6 +37,7 @@ bash /build_scripts/1password.sh
 # CLEANUP
 # ----------------------------------------------------
 $DNF autoremove && $DNF clean all
+rm -rf /run/dnf
 
 # BLUETOOTH PAIRING DATA
 # ----------------------------------------------------
