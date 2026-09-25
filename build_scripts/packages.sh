@@ -43,3 +43,4 @@ $DNF install "${INCLUDED_PACKAGES[@]}"
 # CLEANUP
 # ----------------------------------------------------
 $DNF autoremove && $DNF clean all
+rm -rf /run/dnf
