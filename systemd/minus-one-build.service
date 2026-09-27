@@ -7,6 +7,7 @@ OnFailure=minus-one-build-failure.service
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/minus-one-build.conf
+ExecStartPre=/usr/sbin/bash -c 'for i in {1..60}; do getent hosts ghcr.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
 ExecStart=/usr/bin/bash ${MINUS_ONE_SOURCE}/local-build.sh
 ExecStart=/usr/bin/bootc upgrade
 TimeoutStartSec=infinity
