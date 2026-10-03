@@ -1,57 +1,47 @@
 # minus-one
+This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) tracking "the latest Fedora release minus one," hence the name. This project takes a lot of great ideas from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://github.com/ublue-os/bluefin).
 
-This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) tracking "the latest Fedora release minus one," hence the name. This project takes a lot of great ideas from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://github.com/ublue-os/bluefin). This image builds locally via podman. The intended workflow is to check out this base branch and create a derivative image for the specific machine you're installing it on to add things like the correct video acceleration driver for your processor to the resulting deployment.
+## Features
+### Automatic updates
+- `minus-one-build.service` runs weekly via timer, builds and stages a new image
+- `update-flatpaks.service` runs daily via timer, updates all flatpaks in the system installation
 
----
+### Flathub
+On first boot, all Fedora flatpaks are replaced with flathub equivalents.
 
-## Bootstrap a machine
+### nix
+The package manager, for an unprivileged package manager.
 
-Install Fedora Silverblue using [this iso](https://download.fedoraproject.org/pub/fedora/linux/releases/44/Silverblue/x86_64/iso/Fedora-Silverblue-ostree-x86_64-44-1.7.iso) and clone this repository. Check
-out the branch for the machine. For example:
+### distrobox
+Useful container tool, lets you install packages from many distros in a container and integrate them into the host. This includes graphical packages, so if you have something you can't get via flatpak you can just install them in a distrobox container.
 
-```sh
-git switch machine/buzz-lightyear
-```
+### Emacs
+The advanced, extensible, customizable, self-documenting editor.
 
-Review the branch, then run its bootstrap script:
-
-```sh
-sudo ./bootstrap.sh
-```
-
-The script records the repository's absolute path in
-`/etc/minus-one-build.conf`, builds `localhost/minus-one:latest`, and stages
-that image with `bootc switch`.
-
-Reboot when ready:
+## Setup
+The simplest way to use the image is to run this command from an existing Fedora Silverblue 44 installation:
 
 ```sh
-systemctl reboot
+sudo ./bootstrap.sh --base
 ```
 
-## Run the build machinery
+This will pull the latest published Fedora Silverblue 44 image and build `minus-one` from it in podman's rootful storage, then switch to the image using `bootc`. After a reboot, you'll be running `minus-one`.
 
-The deployed image enables `minus-one-build.timer`. It starts the local image
-build each Sunday at 03:14 and runs a missed build after the machine starts.
-
-Start a build immediately with:
+## Complications
+If you have a machine that needs some more specific handling like VPN software or one of rpmfusion's media drivers, you can set that up by creating a `Containerfile.<machine>` and a corresponding <machine> directory with the necessary build script. In that case, you will need to pass your `<machine>` name to the bootstrap script:
 
 ```sh
-sudo systemctl start minus-one-build.service
+sudo ./bootstrap.sh --grimoire
 ```
 
-Follow the build log with:
-
+If you want to unlock LUKS with a bluetooth keyboard, you can use the `bluetooth-pairing-archive-setup.sh` script to create an archive of your keyboard's pairing data. First pair the device in question, then set the requisite address(es) in the `.env` file. Then run
 ```sh
-journalctl --follow --unit=minus-one-build.service
+sudo ./bluetooth-pairing-archive-setup.sh
 ```
 
-Check the timer with:
+Your build script or `Containerfile.<machine>` will then require an `initramfs` rebuild step to include this bluetooth pairing data in the `initramfs`. See `grimoire/build.sh` for an example.
 
-```sh
-systemctl status minus-one-build.timer
-systemctl list-timers minus-one-build.timer
-```
+Credit for this idea goes to [this comment](https://github.com/coreos/rpm-ostree/issues/4214#issuecomment-3087364057).
 
 ---
 
