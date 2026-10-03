@@ -27,10 +27,12 @@ mv "$config" /etc/minus-one-build.conf
 
 "$source_dir/local-build.sh" "--$machine"
 
-image=containers-storage:localhost/minus-one:latest
-booted_image=$(bootc status | sed -n 's/^.*Booted image: //p')
+bootc_status=$(bootc status --format=json | tr -d '[:space:]')
+host_spec=${bootc_status#*'"spec":'}
+host_spec=${host_spec%%,'"status":'*}
+local_image='"image":{"image":"localhost/minus-one:latest","transport":"containers-storage"}'
 
-if [[ $booted_image == "$image" ]]; then
+if [[ $host_spec == *"$local_image"* ]]; then
     bootc upgrade
 else
     bootc switch \
