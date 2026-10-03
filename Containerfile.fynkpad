@@ -1,0 +1,24 @@
+# PREPARE
+# ----------------------------------------------------
+FROM localhost/minus-one-base:latest
+
+COPY fynkpad/build.sh /build_scripts/fynkpad.sh
+COPY fynkpad/1password.sh /build_scripts/1password.sh
+
+# ASSEMBLE
+# ----------------------------------------------------
+ARG MINUS_ONE_BUILD_ID
+ARG MINUS_ONE_PRIMARY_USER
+RUN --mount=type=tmpfs,dst=/var \
+    --mount=type=tmpfs,dst=/tmp \
+    --mount=type=tmpfs,dst=/boot \
+    --mount=type=secret,id=bluetooth \
+    test -n "$MINUS_ONE_BUILD_ID" && \
+    test -n "$MINUS_ONE_PRIMARY_USER" && \
+    bash /build_scripts/fynkpad.sh
+RUN rm -rf /build_scripts
+
+# COMMIT
+# ----------------------------------------------------
+RUN ostree container commit
+RUN bootc container lint
