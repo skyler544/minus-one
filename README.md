@@ -43,6 +43,22 @@ Your build script or `Containerfile.<machine>` will then require an `initramfs` 
 
 Credit for this idea goes to [this comment](https://github.com/coreos/rpm-ostree/issues/4214#issuecomment-3087364057).
 
+### Building via `systemd`
+
+The deployed image enables a weekly `minus-one-build.timer`.
+
+Start a build immediately with:
+
+```sh
+sudo systemctl start minus-one-build.service
+```
+
+Follow the build log with:
+
+```sh
+journalctl --follow --unit=minus-one-build.service
+```
+
 ---
 
 ## Why not use bluefin?
