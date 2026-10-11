@@ -1,0 +1,9 @@
+[Unit]
+Description=Rebuild the manual page index weekly
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

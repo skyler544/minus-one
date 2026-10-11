@@ -1,0 +1,6 @@
+[Unit]
+Description=Rebuild the manual page index
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mandb

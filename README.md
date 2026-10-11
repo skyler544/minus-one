@@ -4,6 +4,7 @@ This is an OCI image derived from [Fedora Silverblue](https://fedoraproject.org/
 ## Features
 ### Automatic updates
 - `minus-one-build.service` runs weekly via timer, builds and stages a new image
+- `rebuild-mandb.service` runs weekly via timer and rebuilds the manual page index
 - `update-flatpaks.service` runs daily via timer, updates all flatpaks in the system installation
 
 ### Flathub
