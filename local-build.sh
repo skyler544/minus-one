@@ -18,6 +18,7 @@ fi
 
 podman build \
     --pull=always \
+    --network=host \
     --build-arg "MINUS_ONE_BUILD_ID=$build_id" \
     --security-opt=label=disable \
     --tag localhost/minus-one-base:latest \
