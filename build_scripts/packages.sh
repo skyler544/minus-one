@@ -24,6 +24,9 @@ EXCLUDED_PACKAGES=(
     gnome-tour
     google-noto-color-emoji-fonts
     malcontent-control
+    open-vm-tools-desktop
+    spice-vdagent
+    virtualbox-guest-additions
     yelp
 )
 
@@ -32,13 +35,15 @@ INCLUDED_PACKAGES=(
     ddcutil
     distrobox
     emacs
+    google-noto-fonts-all
+    papirus-icon-theme
     podman-compose
 )
 
 # INSTALL PACKAGES
 # ----------------------------------------------------
-$DNF remove "${EXCLUDED_PACKAGES[@]}"
 $DNF install "${INCLUDED_PACKAGES[@]}"
+$DNF remove "${EXCLUDED_PACKAGES[@]}"
 
 # CLEANUP
 # ----------------------------------------------------
