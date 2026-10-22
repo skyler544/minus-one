@@ -6,7 +6,7 @@ DNF="dnf --quiet --assumeyes"
 secret=/run/secrets/bluetooth
 bluetooth_root=/run/minus-one-bluetooth
 
-FIREZONE_VERSION=1.5.17
+FIREZONE_VERSION=1.5.19
 FIREZONE_RPM=firezone-client-gui-linux_${FIREZONE_VERSION}_x86_64.rpm
 FIREZONE_URL=https://github.com/firezone/firezone/releases/download/gui-client-${FIREZONE_VERSION}/${FIREZONE_RPM}
 
