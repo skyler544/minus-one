@@ -9,6 +9,12 @@ if [[ $# -ne 1 ]]; then
     exit 2
 fi
 
+# prevent old images from filling up the rootful container storage
+cleanup() {
+    podman image prune --force || true
+}
+trap cleanup EXIT
+
 machine=${1#--}
 containerfile=$context/Containerfile.$machine
 if [[ $machine != base && ! -f $containerfile ]]; then
@@ -17,6 +23,7 @@ if [[ $machine != base && ! -f $containerfile ]]; then
 fi
 
 podman build \
+    --force-rm \
     --pull=always \
     --network=host \
     --build-arg "MINUS_ONE_BUILD_ID=$build_id" \
@@ -37,6 +44,7 @@ else
     fi
 
     machine_build_options=(
+        --force-rm
         --pull=never
         --network=host
         --build-arg "MINUS_ONE_BUILD_ID=$build_id"
@@ -53,6 +61,3 @@ else
 
     podman build "${machine_build_options[@]}" "$context"
 fi
-
-# prevent old images from filling up the rootful container storage
-podman image prune --force

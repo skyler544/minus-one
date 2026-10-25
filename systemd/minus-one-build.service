@@ -7,6 +7,8 @@ OnFailure=minus-one-build-failure.service
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/minus-one-build.conf
+ExecStartPre=/usr/bin/buildah rm --all
+ExecStartPre=/usr/bin/podman image prune --force
 ExecStartPre=/usr/sbin/bash -c 'for i in {1..60}; do getent hosts quay.io >/dev/null 2>&1 && exit 0 || sleep 1; done; exit 1'
 ExecStart=/usr/bin/bash ${MINUS_ONE_SOURCE}/local-build.sh --${MINUS_ONE_MACHINE}
 ExecStart=/usr/bin/bootc upgrade
