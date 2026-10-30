@@ -21,5 +21,4 @@ RUN rm -rf /build_scripts
 
 # COMMIT
 # ----------------------------------------------------
-RUN ostree container commit
 RUN bootc container lint
