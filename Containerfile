@@ -15,8 +15,7 @@ RUN --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=tmpfs,dst=/boot \
     test -n "$MINUS_ONE_BUILD_ID" && \
-    bash /build_scripts/build.sh && \
-    bash /build_scripts/packages.sh
+    bash /build_scripts/build.sh
 RUN rm -rf /build_scripts
 
 # COMMIT

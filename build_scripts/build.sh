@@ -2,27 +2,48 @@
 set -euxo pipefail
 DNF="dnf --quiet --assumeyes"
 
-# FLATHUB REPO
+# BASE PACKAGES
 # ----------------------------------------------------
-mkdir -p /etc/flatpak/remotes.d
-curl --retry 3 -Lo \
-    "/etc/flatpak/remotes.d/flathub.flatpakrepo" \
-    "https://dl.flathub.org/repo/flathub.flatpakrepo"
+EXCLUDED_PACKAGES=(
+    default-fonts-core-emoji
+    fedora-bookmarks
+    fedora-chromium-config
+    fedora-chromium-config-gnome
+    fedora-flathub-remote
+    fedora-third-party
+    firefox
+    firefox-langpacks
+    gnome-shell-extension-apps-menu
+    gnome-shell-extension-background-logo
+    gnome-shell-extension-launch-new-instance
+    gnome-shell-extension-places-menu
+    gnome-shell-extension-window-list
+    gnome-software
+    gnome-software-rpm-ostree
+    gnome-system-monitor
+    gnome-tour
+    google-noto-color-emoji-fonts
+    malcontent-control
+    open-vm-tools-desktop
+    spice-vdagent
+    virtualbox-guest-additions
+    yelp
+)
 
-# REPLACE FEDORA FLATPAKS
-# ----------------------------------------------------
-rm -f /usr/lib/systemd/system/flatpak-add-fedora-repos.service || true
-systemctl enable replace-fedora-flatpak-remotes.service
-systemctl enable replace-installed-fedora-flatpaks.timer
+INCLUDED_PACKAGES=(
+    adw-gtk3-theme
+    ddcutil
+    distrobox
+    emacs
+    google-noto-fonts-all
+    papirus-icon-theme
+    podman-compose
+)
 
-# AUTOMATIC UPDATES
-# ----------------------------------------------------
-systemctl enable update-flatpaks.timer
-systemctl enable install-system-flatpaks.timer
-systemctl enable minus-one-build.timer
-systemctl enable rebuild-mandb.timer
+$DNF install "${INCLUDED_PACKAGES[@]}"
+$DNF remove "${EXCLUDED_PACKAGES[@]}"
 
-# INSTALL DOCKER
+# DOCKER
 # ----------------------------------------------------
 DOCKER_PACKAGES=(
     containerd.io
@@ -35,26 +56,7 @@ $DNF config-manager addrepo \
 $DNF install --enablerepo=docker-ce-stable "${DOCKER_PACKAGES[@]}"
 
 systemd-sysusers
-
-# START DOCKER SOCKET
-# ----------------------------------------------------
 systemctl enable docker.socket
-
-# RPM FUSION
-# ----------------------------------------------------
-$DNF install \
-    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-# MULTIMEDIA
-# ----------------------------------------------------
-$DNF swap ffmpeg-free ffmpeg --allowerasing
-$DNF install --allow-downgrade --allowerasing \
-    libheif-tools libheif-freeworld ImageMagick-heic
-$DNF group install multimedia \
-    --setopt="install_weak_deps=False" \
-    --exclude=PackageKit-gstreamer-plugin
-$DNF install libva-utils
 
 # NIX
 # ----------------------------------------------------
@@ -69,6 +71,44 @@ cat >>/etc/selinux/targeted/contexts/files/file_contexts.subs_dist <<'EOF'
 /var/nix/store /usr
 /var/nix/var /run
 EOF
+
+# MULTIMEDIA
+# ----------------------------------------------------
+$DNF install \
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+$DNF swap ffmpeg-free ffmpeg --allowerasing
+$DNF install --allow-downgrade --allowerasing \
+    libheif-tools libheif-freeworld ImageMagick-heic
+$DNF group install multimedia \
+    --setopt="install_weak_deps=False" \
+    --exclude=PackageKit-gstreamer-plugin
+$DNF install libva-utils
+
+# FLATPAKS
+# ----------------------------------------------------
+mkdir -p /etc/flatpak/remotes.d
+curl --retry 3 -Lo \
+    "/etc/flatpak/remotes.d/flathub.flatpakrepo" \
+    "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+rm -f /usr/lib/systemd/system/flatpak-add-fedora-repos.service || true
+systemctl enable replace-fedora-flatpak-remotes.service
+systemctl enable replace-installed-fedora-flatpaks.timer
+
+systemctl enable update-flatpaks.timer
+systemctl enable install-system-flatpaks.timer
+
+# SYSTEM SERVICES
+# ----------------------------------------------------
+systemctl enable minus-one-build.timer
+systemctl enable rebuild-mandb.timer
+
+# DNF CLEANUP
+# ----------------------------------------------------
+$DNF autoremove && $DNF clean all
+rm -rf /run/dnf
 
 # PLYMOUTH
 # ----------------------------------------------------
