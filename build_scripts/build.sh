@@ -45,14 +45,16 @@ $DNF remove "${EXCLUDED_PACKAGES[@]}"
 
 # DOCKER
 # ----------------------------------------------------
+$DNF config-manager addrepo \
+    --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+
 DOCKER_PACKAGES=(
     containerd.io
     docker-ce
     docker-ce-cli
     docker-compose-plugin
 )
-$DNF config-manager addrepo \
-    --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+
 $DNF install --enablerepo=docker-ce-stable "${DOCKER_PACKAGES[@]}"
 
 systemd-sysusers
@@ -60,7 +62,13 @@ systemctl enable docker.socket
 
 # NIX
 # ----------------------------------------------------
-$DNF install nix nix-daemon
+NIX_PACKAGES=(
+    nix
+    nix-daemon
+)
+
+$DNF install "${NIX_PACKAGES[@]}"
+
 systemctl enable nix-daemon.socket nix.mount
 rm -rf /nix
 mkdir -p /nix
@@ -79,12 +87,23 @@ $DNF install \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 $DNF swap ffmpeg-free ffmpeg --allowerasing
-$DNF install --allow-downgrade --allowerasing \
-    libheif-tools libheif-freeworld ImageMagick-heic
 $DNF group install multimedia \
     --setopt="install_weak_deps=False" \
     --exclude=PackageKit-gstreamer-plugin
-$DNF install libva-utils
+
+MULTIMEDIA_PACKAGES=(
+    ImageMagick-heic
+    libheif-freeworld
+    libheif-tools
+    libva-utils
+)
+
+$DNF install --allow-downgrade --allowerasing "${MULTIMEDIA_PACKAGES[@]}"
+
+# DNF CLEANUP
+# ----------------------------------------------------
+$DNF autoremove && $DNF clean all
+rm -rf /run/dnf
 
 # FLATPAKS
 # ----------------------------------------------------
@@ -104,11 +123,6 @@ systemctl enable install-system-flatpaks.timer
 # ----------------------------------------------------
 systemctl enable minus-one-build.timer
 systemctl enable rebuild-mandb.timer
-
-# DNF CLEANUP
-# ----------------------------------------------------
-$DNF autoremove && $DNF clean all
-rm -rf /run/dnf
 
 # PLYMOUTH
 # ----------------------------------------------------
