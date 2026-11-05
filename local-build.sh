@@ -9,7 +9,7 @@ if [[ $# -ne 1 ]]; then
     exit 2
 fi
 
-# prevent old images from filling up the rootful container storage
+# prevent old images from filling up the container storage
 cleanup() {
     podman image prune --force || true
 }
@@ -22,14 +22,20 @@ if [[ $machine != base && ! -f $containerfile ]]; then
     exit 2
 fi
 
-podman build \
-    --force-rm \
-    --pull=always \
-    --network=host \
-    --build-arg "MINUS_ONE_BUILD_ID=$build_id" \
-    --security-opt=label=disable \
-    --tag localhost/minus-one-base:latest \
-    "$context"
+common_build_options=(
+    --force-rm
+    --network=host
+    --build-arg "MINUS_ONE_BUILD_ID=$build_id"
+    --security-opt=label=disable
+)
+
+base_build_options=(
+    "${common_build_options[@]}"
+    --pull=always
+    --tag localhost/minus-one-base:latest
+)
+
+podman build "${base_build_options[@]}" "$context"
 
 if [[ $machine == base ]]; then
     podman tag \
@@ -44,12 +50,9 @@ else
     fi
 
     machine_build_options=(
-        --force-rm
+        "${common_build_options[@]}"
         --pull=never
-        --network=host
-        --build-arg "MINUS_ONE_BUILD_ID=$build_id"
         --build-arg MINUS_ONE_PRIMARY_USER
-        --security-opt=label=disable
         --file "$containerfile"
         --tag localhost/minus-one:latest
     )
