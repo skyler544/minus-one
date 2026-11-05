@@ -136,18 +136,4 @@ grep --quiet --line-regexp 'if false; then' "$populate_initrd"
 
 # INITRAMFS
 # ----------------------------------------------------
-install --directory --mode=1777 /var/tmp
-install --directory --mode=0700 /var/roothome
-install --directory --mode=1777 /tmp/dracut
-
-mapfile -t kernels < <(
-    find /usr/lib/modules -mindepth 1 -maxdepth 1 -type d -printf '%f\n'
-)
-kernel=${kernels[0]}
-initramfs=/usr/lib/modules/$kernel/initramfs.img
-
-DRACUT_NO_XATTR=1 dracut \
-    --force \
-    --rebuild "$initramfs" \
-    "$initramfs" \
-    "$kernel"
+/build_scripts/rebuild-initramfs

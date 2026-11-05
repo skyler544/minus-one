@@ -2,6 +2,7 @@
 # ----------------------------------------------------
 FROM localhost/minus-one-base:latest
 
+COPY build_scripts/rebuild-initramfs /build_scripts/rebuild-initramfs
 COPY grimoire/build.sh /build_scripts/grimoire.sh
 
 # ASSEMBLE

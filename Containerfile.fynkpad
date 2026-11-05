@@ -2,6 +2,7 @@
 # ----------------------------------------------------
 FROM localhost/minus-one-base:latest
 
+COPY build_scripts/rebuild-initramfs /build_scripts/rebuild-initramfs
 COPY fynkpad/build.sh /build_scripts/fynkpad.sh
 COPY fynkpad/1password.sh /build_scripts/1password.sh
 
