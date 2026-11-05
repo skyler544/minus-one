@@ -2,8 +2,8 @@
 # ----------------------------------------------------
 FROM localhost/minus-one-base:latest
 
-COPY build_scripts/rebuild-initramfs /build_scripts/rebuild-initramfs
-COPY grimoire/build.sh /build_scripts/grimoire.sh
+COPY build_scripts /build_scripts
+COPY grimoire /build_scripts
 
 # ASSEMBLE
 # ----------------------------------------------------
@@ -13,7 +13,7 @@ RUN --mount=type=tmpfs,dst=/var \
     --mount=type=tmpfs,dst=/boot \
     --mount=type=secret,id=bluetooth \
     test -n "$MINUS_ONE_BUILD_ID" && \
-    bash /build_scripts/grimoire.sh
+    bash /build_scripts/build.sh
 RUN rm -rf /build_scripts
 
 # COMMIT

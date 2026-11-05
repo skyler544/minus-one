@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euo pipefail
+umask 077
+
+secret=/run/secrets/bluetooth
+bluetooth_root=$(mktemp --directory /run/minus-one-bluetooth.XXXXXX)
+
+cleanup() {
+    rm -rf -- "$bluetooth_root"
+}
+trap cleanup EXIT
+
+tar --extract \
+    --file "$secret" \
+    --directory "$bluetooth_root" \
+    --no-same-owner \
+    --no-same-permissions
+
+/build_scripts/rebuild-initramfs \
+    --add bluetooth \
+    --include "$bluetooth_root" /var/lib/bluetooth

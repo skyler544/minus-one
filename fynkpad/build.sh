@@ -1,24 +1,14 @@
 #!/bin/bash
 set -euxo pipefail
-umask 077
-
 DNF="dnf --quiet --assumeyes"
-secret=/run/secrets/bluetooth
-bluetooth_root=/run/minus-one-bluetooth
 
 FIREZONE_VERSION=1.5.19
 FIREZONE_RPM=firezone-client-gui-linux_${FIREZONE_VERSION}_x86_64.rpm
 FIREZONE_URL=https://github.com/firezone/firezone/releases/download/gui-client-${FIREZONE_VERSION}/${FIREZONE_RPM}
 
-cleanup() {
-    rm -rf "$bluetooth_root"
-}
-trap cleanup EXIT
-
 # AMD VIDEO ACCELERATION
 # ----------------------------------------------------
 $DNF install mesa-va-drivers-freeworld
-$DNF clean all
 
 # FIREZONE
 # ----------------------------------------------------
@@ -34,22 +24,11 @@ systemctl enable firezone-client-tunnel.service
 # ----------------------------------------------------
 bash /build_scripts/1password.sh
 
-# CLEANUP
+# DNF CLEANUP
 # ----------------------------------------------------
 $DNF autoremove && $DNF clean all
 rm -rf /run/dnf
 
-# BLUETOOTH PAIRING DATA
+# BLUETOOTH PAIRING DATA AND INITRAMFS
 # ----------------------------------------------------
-install --directory --owner=root --group=root --mode=0700 "$bluetooth_root"
-tar --extract \
-    --file "$secret" \
-    --directory "$bluetooth_root" \
-    --no-same-owner \
-    --no-same-permissions
-
-# INITRAMFS
-# ----------------------------------------------------
-/build_scripts/rebuild-initramfs \
-    --add bluetooth \
-    --include "$bluetooth_root" /var/lib/bluetooth
+/build_scripts/install-bluetooth-pairing

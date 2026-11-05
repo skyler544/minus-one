@@ -2,9 +2,8 @@
 # ----------------------------------------------------
 FROM localhost/minus-one-base:latest
 
-COPY build_scripts/rebuild-initramfs /build_scripts/rebuild-initramfs
-COPY fynkpad/build.sh /build_scripts/fynkpad.sh
-COPY fynkpad/1password.sh /build_scripts/1password.sh
+COPY build_scripts /build_scripts
+COPY fynkpad /build_scripts
 
 # ASSEMBLE
 # ----------------------------------------------------
@@ -16,7 +15,7 @@ RUN --mount=type=tmpfs,dst=/var \
     --mount=type=secret,id=bluetooth \
     test -n "$MINUS_ONE_BUILD_ID" && \
     test -n "$MINUS_ONE_PRIMARY_USER" && \
-    bash /build_scripts/fynkpad.sh
+    bash /build_scripts/build.sh
 RUN rm -rf /build_scripts
 
 # COMMIT
