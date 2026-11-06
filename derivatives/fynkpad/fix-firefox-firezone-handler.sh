@@ -3,7 +3,7 @@
 # caveat lector: this script is 100% AI-generated. Before running it, logging in
 # to firezone from flatpak firefox was impossible.
 #
-# Usage: ./fynkpad/fix-firefox-firezone-handler.sh [SCHEME] SCHEME defaults to
+# Usage: ./derivatives/fynkpad/fix-firefox-firezone-handler.sh [SCHEME] SCHEME defaults to
 #   firezone-fd0020211111. it's the x-scheme-handler/... in
 #   ~/.local/share/applications/firezone-client.desktop
 set -euxo pipefail

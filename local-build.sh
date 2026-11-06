@@ -5,7 +5,7 @@ context=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 build_id=$(date +%s)
 
 if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 --base|--MACHINE" >&2
+    echo "Usage: $0 --base|--DERIVATIVE" >&2
     exit 2
 fi
 
@@ -15,10 +15,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
-machine=${1#--}
-containerfile=$context/Containerfile.$machine
-if [[ $machine != base && ! -f $containerfile ]]; then
-    echo "Unknown machine: $machine" >&2
+image=${1#--}
+if [[ $image != base && ! -f $context/derivatives/$image/build.sh ]]; then
+    echo "Unknown derivative: $image" >&2
     exit 2
 fi
 
@@ -37,7 +36,7 @@ base_build_options=(
 
 podman build "${base_build_options[@]}" "$context"
 
-if [[ $machine == base ]]; then
+if [[ $image == base ]]; then
     podman tag \
         localhost/minus-one-base:latest \
         localhost/minus-one:latest
@@ -49,18 +48,19 @@ else
         set +a
     fi
 
-    machine_build_options=(
+    derivative_build_options=(
         "${common_build_options[@]}"
         --pull=never
+        --build-arg "MINUS_ONE_DERIVATIVE=$image"
         --build-arg MINUS_ONE_PRIMARY_USER
-        --file "$containerfile"
+        --file "$context/Containerfile.derivative"
         --tag localhost/minus-one:latest
     )
 
     bluetooth_secret=/var/lib/minus-one-secrets/bluetooth.tar
     if [[ -f $bluetooth_secret ]]; then
-        machine_build_options+=(--secret=id=bluetooth,src="$bluetooth_secret")
+        derivative_build_options+=(--secret=id=bluetooth,src="$bluetooth_secret")
     fi
 
-    podman build "${machine_build_options[@]}" "$context"
+    podman build "${derivative_build_options[@]}" "$context"
 fi

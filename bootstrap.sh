@@ -7,25 +7,25 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 --base|--MACHINE" >&2
+    echo "Usage: $0 --base|--DERIVATIVE" >&2
     exit 2
 fi
 
-machine=${1#--}
+image=${1#--}
 source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 
-if [[ $machine != base && ! -f $source_dir/Containerfile.$machine ]]; then
-    echo "Unknown machine: $machine" >&2
+if [[ $image != base && ! -f $source_dir/derivatives/$image/build.sh ]]; then
+    echo "Unknown derivative: $image" >&2
     exit 2
 fi
 
 config=$(mktemp /etc/minus-one-build.conf.new.XXXXXX)
 printf 'MINUS_ONE_SOURCE=%s\n' "$source_dir" >"$config"
-printf 'MINUS_ONE_MACHINE=%s\n' "$machine" >>"$config"
+printf 'MINUS_ONE_IMAGE=%s\n' "$image" >>"$config"
 chmod 0644 "$config"
 mv "$config" /etc/minus-one-build.conf
 
-"$source_dir/local-build.sh" "--$machine"
+"$source_dir/local-build.sh" "--$image"
 
 bootc_status=$(bootc status --format=json | tr -d '[:space:]')
 host_spec=${bootc_status#*'"spec":'}
@@ -40,4 +40,4 @@ else
         localhost/minus-one:latest
 fi
 
-echo "The machine image is staged. Reboot when ready."
+echo "The image is staged. Reboot when ready."
